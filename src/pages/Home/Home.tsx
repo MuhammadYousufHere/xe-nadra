@@ -4,7 +4,9 @@ import { Wrapper } from '../../components/common/Wrapper';
 import { Button } from '../../components/common/Button';
 import { FaUser } from 'react-icons/fa';
 import { TiArrowRightThick } from 'react-icons/ti';
+import { useNavigate } from 'react-router-dom';
 function Home() {
+  const navigate = useNavigate();
   return (
     <header className='home'>
       <Wrapper>
@@ -36,11 +38,13 @@ function Home() {
               title='Register An Account'
               variant='primary'
               icon={<FaUser />}
+              onClick={() => navigate('/register')}
             />
             <Button
               title='Login With Existing Account'
               variant='secondary'
               icon={<TiArrowRightThick />}
+              onClick={() => navigate('/login')}
             />
           </div>
           <div className='footer'>

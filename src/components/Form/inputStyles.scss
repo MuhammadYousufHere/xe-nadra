@@ -1,0 +1,46 @@
+@use '../../styles/colors' as *;
+
+.input-group {
+  width: 100%;
+  margin: 0.6rem 0;
+  padding: 0;
+  min-width: 500px;
+  label {
+    // visibility: hidden;
+    font-size: clamp(1rem, 2vw + 0.44rem, 1.3rem);
+    font-weight: 500;
+    font-family: 'Poppins', sans-serif;
+    color: $text-lightest;
+  }
+  .input-box {
+    display: flex;
+    align-items: center;
+    background-color: $bg-light;
+    margin-top: 5px;
+    width: 100%;
+    svg {
+      margin-right: 0.5rem;
+    }
+    input {
+      padding: 0.9rem 1rem;
+      outline: 1px solid $text-lightest;
+      border: none;
+      background-color: $bg-light;
+      width: 100%;
+      margin: 0;
+      text-transform: capitalize;
+      &:focus-within {
+        outline: 1px solid $bg-secondary;
+      }
+    }
+  }
+}
+
+@media (max-width: 28em) {
+  .input-group {
+    margin: 0;
+    input {
+      font-size: 0.8rem !important;
+    }
+  }
+}
