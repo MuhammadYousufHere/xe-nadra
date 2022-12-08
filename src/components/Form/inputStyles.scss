@@ -1,15 +1,16 @@
-@use '../../styles/colors' as *;
+@use "../../styles/colors" as *;
 
 .input-group {
   width: 100%;
   margin: 0.6rem 0;
-  padding: 0;
-  min-width: 500px;
+  padding: 0.3rem 0;
+  min-width: 400px;
+  border-radius: 4px;
   label {
     // visibility: hidden;
     font-size: clamp(1rem, 2vw + 0.44rem, 1.3rem);
     font-weight: 500;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     color: $text-lightest;
   }
   .input-box {
@@ -18,12 +19,30 @@
     background-color: $bg-light;
     margin-top: 5px;
     width: 100%;
+    border: 1px solid $light-gray;
+    border-radius: 4px;
+
+    .input-icon {
+      border-left: 1px solid $light-gray;
+      position: relative;
+      padding: 0.7rem 6px 0.7rem 12px;
+      height: 100%;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      svg {
+        font-size: 1.4rem;
+      }
+    }
     svg {
       margin-right: 0.5rem;
     }
     input {
       padding: 0.9rem 1rem;
-      outline: 1px solid $text-lightest;
+      border-radius: 4px;
+
+      outline: none;
       border: none;
       background-color: $bg-light;
       width: 100%;

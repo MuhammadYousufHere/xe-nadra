@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
 export interface InputProps {
   name: string;
-  label: string;
+  label?: string;
   type?: string;
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -12,4 +12,13 @@ export interface InputProps {
   className?: string;
   disabled?: boolean;
   icon?: React.ReactNode | JSX.Element;
+  onToggle?: () => void;
+  pattern?: string;
+}
+
+export interface SearchProps {
+  type?: HTMLInputTypeAttribute;
+  value?: string;
+  name?: string;
+  onChange?: (e: React.InputHTMLAttributes<HTMLInputElement>) => void;
 }

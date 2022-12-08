@@ -1,4 +1,4 @@
-@use '../../../styles/colors' as *;
+@use "../../../styles/colors" as *;
 .btn {
   margin: 0px;
   appearance: none;
@@ -14,7 +14,7 @@
   justify-content: center;
   box-sizing: border-box;
   font-size: 16px;
-  font-family: 'Poppins', 'Roboto', sans-serif;
+  font-family: "Poppins", "Roboto", sans-serif;
   font-weight: 500;
   text-align: center;
   text-decoration: none;
@@ -28,6 +28,7 @@
   border: none;
   background-image: none;
   text-transform: capitalize;
+  transition: 0.3s all;
   svg {
     margin-left: 5px;
   }
@@ -40,11 +41,24 @@
   background-color: $bg_primary;
   &:disabled {
   }
+  &:hover,
+  &:active {
+    text-decoration: none;
+    box-shadow: rgb(16 172 132 / 57%) 0px 9px 20px -5px;
+    color: #fff;
+  }
 }
 .btn-secondary {
   @extend .btn;
   background-color: $bg_secondary;
   &:disabled {
+  }
+  &:hover,
+  &:active,
+  &:focus {
+    text-decoration: none;
+    box-shadow: rgb(16 100 172 / 57%) 0px 9px 20px -5px;
+    color: #fff;
   }
 }
 .btn-outlined {

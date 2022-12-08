@@ -1,19 +1,18 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { Wrapper } from "../../components/common/Wrapper";
-import { IoMdLogIn } from "react-icons/io";
-import "./LoginStyle.scss";
+import "./ForgotPassword.scss";
 import { Input } from "../../components/Form";
 import Loader from "../../components/PreLoader/Loader";
-import { ImEyeBlocked, ImEye } from "react-icons/im";
 import cap from "../../assets/captcha.jpeg";
 import { Button } from "../../components/common/Button";
-const Login = () => {
+import { useNavigate } from "react-router-dom";
+import { IoEllipsisHorizontal } from "react-icons/io5";
+const ForgotPassword = () => {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [show, setShow] = useState(false);
   const initialValues = {
     email: "",
-    password: "",
     code: "",
   };
   useEffect(() => {
@@ -21,7 +20,7 @@ const Login = () => {
       setLoading(false);
     }, 1000);
   }, []);
-  const { email, password, code } = initialValues;
+  const { email, code } = initialValues;
   if (loading) {
     return (
       <Wrapper>
@@ -31,18 +30,25 @@ const Login = () => {
   }
   return (
     <Wrapper>
-      <div className="login">
+      <div className="forgotpassword">
         <div className="bar"></div>
-        <div className="login__content">
+        <div className="forgotpassword__content">
           <div className="icon">
-            <IoMdLogIn />
+            <IoEllipsisHorizontal />
           </div>
-          <div className="login__content__title">
-            <h1>Login to your PAK-IDENTITY account</h1>
+          <div className="forgotpassword__content__title">
+            <h2>Forgot Password</h2>
           </div>
           <div className="saperator"></div>
 
           <form>
+            <div className="info">
+              <p>Enter your registered email address below.</p>
+              <p>
+                You will be sent an email with details of how to reset your
+                password
+              </p>
+            </div>
             <Input
               type="email"
               name="email"
@@ -51,20 +57,10 @@ const Login = () => {
               value={email}
               onChange={() => {}}
             />
-            <Input
-              type={show ? "text" : "password"}
-              name="password"
-              id="password"
-              label="Password"
-              value={password}
-              onChange={() => {}}
-              onToggle={() => setShow(!show)}
-              icon={show ? <ImEye /> : <ImEyeBlocked />}
-            />
+
             <div className="captcha-part">
               <div className="captcha">
                 <img src={cap} alt="cap" />
-                <Link to="/register">Create New Account</Link>
               </div>
               <div className="confirm">
                 <Input
@@ -75,14 +71,21 @@ const Login = () => {
                   value={code}
                   onChange={() => {}}
                 />
-                <div className="link">
-                  <Link to="/forgotpassword">Forgot Password ?</Link>
-                </div>
               </div>
             </div>
             <div className="saperator"></div>
             <div className="submit">
-              <Button type="submit" title="Login" variant="secondary" />
+              <Button
+                type="button"
+                title="Back To Login"
+                variant="secondary"
+                onClick={() => navigate(-1)}
+              />
+              <Button
+                type="submit"
+                title="Reset Password"
+                variant="secondary"
+              />
             </div>
           </form>
         </div>
@@ -91,10 +94,4 @@ const Login = () => {
   );
 };
 
-export default Login;
-
-/* <Recaptcha
-                sitekey={process.env.NEXT_PUBLIC_VERIFY_RECAPTCHA_SITE_KEY}
-                render="explicit"
-                verifyCallback={verifyCallback}
-              />*/
+export default ForgotPassword;
