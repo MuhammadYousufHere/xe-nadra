@@ -1,8 +1,8 @@
-@use "../../styles/colors" as *;
+@use '../../styles/colors' as *;
 .login {
   position: relative;
   background-color: $bg-gray;
-  margin-top: 4rem;
+  margin: 4rem 0;
   padding: 2rem;
   transition: 0.3s all;
   &:hover {
@@ -10,7 +10,7 @@
     box-shadow: 0 0 15px #ddd;
   }
   .bar {
-    content: "";
+    content: '';
     position: absolute;
     width: 64px;
     height: 5px;
