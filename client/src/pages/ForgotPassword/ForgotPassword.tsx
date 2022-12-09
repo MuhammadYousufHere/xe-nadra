@@ -30,6 +30,8 @@ const ForgotPassword = () => {
       email: validate.email,
       captchacode: validate.captchacode,
     }),
+    validateOnBlur: false,
+    validateOnChange: false,
   });
   useEffect(() => {
     setInterval(() => {

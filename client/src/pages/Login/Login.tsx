@@ -35,6 +35,8 @@ const Login = () => {
       password: validate.password,
       captchacode: validate.captchacode,
     }),
+    validateOnBlur: false,
+    validateOnChange: false,
   });
 
   useEffect(() => {

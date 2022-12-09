@@ -84,6 +84,8 @@ const Register = () => {
       confirmPassword: validate.confirmPassword,
       captchacode: validate.captchacode,
     }),
+    validateOnBlur: false,
+    validateOnChange: false,
   });
   //
   // instantant filter data
