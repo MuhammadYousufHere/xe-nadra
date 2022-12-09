@@ -1,4 +1,4 @@
-@use "../../styles/colors" as *;
+@use '../../styles/colors' as *;
 .top-reg {
   margin-top: 4rem;
   display: flex;
@@ -19,7 +19,7 @@
     text-transform: uppercase;
     gap: 0.1rem;
     padding: 1rem;
-
+    cursor: pointer;
     h1 {
       margin: 0;
       font-size: 2.5rem;
@@ -38,6 +38,9 @@
   .right {
     color: #777;
     background: #eaeaea;
+    &:disabled {
+      cursor: not-allowed;
+    }
   }
 }
 .bottom-reg {
@@ -49,7 +52,7 @@
     background-color: $bg-gray;
     height: max-content;
     .bar {
-      content: "";
+      content: '';
       position: absolute;
       width: 64px;
       height: 5px;
@@ -86,7 +89,7 @@
     box-shadow: 0 0 15px #ddd;
   }
   .bar {
-    content: "";
+    content: '';
     position: absolute;
     width: 64px;
     height: 5px;
@@ -140,7 +143,7 @@
         font-size: 19px;
         line-height: 1;
         font-weight: 300;
-        font-family: "Poppins", "Roboto", sans-serif;
+        font-family: 'Poppins', 'Roboto', sans-serif;
       }
       a {
         color: $text-tertiary;
