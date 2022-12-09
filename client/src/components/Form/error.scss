@@ -1,0 +1,22 @@
+.ui-message-error {
+  color: #b94a48;
+  background-color: #f2dede;
+  border-color: #eed3d7;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  position: relative;
+  z-index: 3;
+}
+
+.ui-message-error-icon {
+  width: 22px;
+  height: 22px;
+  background-color: #f2dede;
+  z-index: -1;
+  position: absolute;
+  left: 50%;
+  bottom: 50%;
+  transform: rotate(135deg);
+}
