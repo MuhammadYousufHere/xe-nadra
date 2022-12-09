@@ -1,4 +1,4 @@
-@use "../../styles/colors" as *;
+@use '../../styles/colors' as *;
 
 .ui-input-container,
 .input-group {
@@ -13,7 +13,7 @@
     // visibility: hidden;
     font-size: clamp(1rem, 2vw + 0.44rem, 1.3rem);
     font-weight: 500;
-    font-family: "Poppins", sans-serif;
+    font-family: 'Poppins', sans-serif;
     color: $text-lightest;
   }
   .input-box {
@@ -44,8 +44,7 @@
     input {
       padding: 0.85rem 1rem;
       border-radius: 4px;
-      font-family: "Poppins", "Roboto", sans-serif;
-      font-size: 1rem;
+
       color: $text-primary;
       outline: none;
       border: none;
