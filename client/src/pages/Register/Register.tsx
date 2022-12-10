@@ -1,47 +1,38 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import uuid from 'react-uuid';
+import { useFormik } from 'formik';
+import * as YUP from 'yup';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { operators } from './helper';
 import { Wrapper } from '../../components/common/Wrapper';
-import { Country } from 'country-state-city';
 import { HiUserPlus } from 'react-icons/hi2';
-import './RegisterStyle.scss';
 import { Dropdown, Input } from '../../components/Form';
 import Loader from '../../components/PreLoader/Loader';
 import cap from '../../assets/captcha.jpeg';
 import { Button } from '../../components/common/Button';
 import SearchBar from '../../components/Form/SearchBar';
-import { useFormik } from 'formik';
-import * as YUP from 'yup';
-
 import Alert from './Alert';
 import useFormValidation from '../../hooks/useFormValidation';
 import ScrollToTop from '../../components/ScrollTop';
 import Footer from '../Footer/Footer';
-const operators = [
-  { id: uuid(), name: 'Ufone' },
-  { id: uuid(), name: 'Mobilink' },
-  { id: uuid(), name: 'Zong' },
-  { id: uuid(), name: 'Warid' },
-  { id: uuid(), name: 'Telenor' },
-];
+import useCountryInfo from '../../hooks/useCountryInfo';
+import './RegisterStyle.scss';
 
 const Register = () => {
+  const { countries, withPhoneCodes } = useCountryInfo();
   const validate = useFormValidation();
   const navigate = useNavigate();
-  const all = Country.getAllCountries().map((country) => ({
-    id: uuid(),
-    name: country.name,
-  }));
-  const [allCountries, setAllCountries] = useState(all);
+
+  const [allCountries, setAllCountries] = useState(countries);
   const [filter, setFilter] = useState('');
   const [loading, setLoading] = useState(true);
-  const [countryCode] = useState<string | undefined>('+92');
-  const [country] = useState('Pakistan');
-  const [mobileOperater] = useState('Mobilink');
+  const [countryCode, setCountryCode] = useState<string | undefined>('+92');
+  const [country, setSelectedCountry] = useState<string | undefined>(
+    'Pakistan'
+  );
+  const [mobileOperater, setMobileOperator] = useState<string | null>();
 
   const initialValues = {
     foreName: '',
@@ -96,13 +87,23 @@ const Register = () => {
     return res;
   };
   // filter country codes
-  // const countryCodeHandler = (countryName: string) => {
-  //   const filter = Country.getAllCountries()
-  //     .map((country) => country)
-  //     .find((c) => c.name === countryName && c);
+  const countryCodeHandler = (countryName: string) =>
+    withPhoneCodes.find((c) => c.name === countryName && c)?.phoneCode;
 
-  //   return filter?.phonecode;
-  // };
+  //
+  type Params = string | number;
+  const handleOperatorClick = (idx: Params) => {
+    const itemselected = operators?.find((item) => item.id === idx)?.name;
+    setMobileOperator(itemselected);
+
+    console.log({ itemselected, idx });
+  };
+  const handleCountryClick = (idx: Params) => {
+    const countrySelected = allCountries?.find((item) => item.id === idx)?.name;
+    setSelectedCountry(countrySelected);
+    setCountryCode(countryCodeHandler(countrySelected!));
+    console.log({ countrySelected, idx });
+  };
 
   useEffect(() => {
     setInterval(() => {
@@ -175,6 +176,8 @@ const Register = () => {
                     label='Country'
                     data={allCountries}
                     errorMessage={errors.country}
+                    selectedItem={country}
+                    handleItemClick={handleCountryClick}
                   >
                     <SearchBar
                       value={filter}
@@ -188,6 +191,8 @@ const Register = () => {
                   <Dropdown
                     id='mob-operator'
                     label='Mobile Operater'
+                    selectedItem={mobileOperater}
+                    handleItemClick={handleOperatorClick}
                     data={operators}
                     errorMessage={errors.mobileOperater}
                   />
@@ -255,7 +260,7 @@ const Register = () => {
                   <div className='submit'>
                     <Button
                       type='submit'
-                      title='Login'
+                      title='Next'
                       variant='secondary'
                     />
                   </div>

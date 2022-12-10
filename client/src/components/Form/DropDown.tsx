@@ -1,9 +1,9 @@
-import { useState, useRef } from "react";
-import { DropdownProps } from "./types.d";
-import { MdOutlineArrowDropDown } from "react-icons/md";
-import useOnClickOutside from "../../hooks/useClickOutside";
-import "./DropDown.scss";
-import ErrorMessage from "./ErrorMessage";
+import { useState, useRef } from 'react';
+import { DropdownProps } from './types.d';
+import { MdOutlineArrowDropDown } from 'react-icons/md';
+import useOnClickOutside from '../../hooks/useClickOutside';
+import './DropDown.scss';
+import ErrorMessage from './ErrorMessage';
 
 const Dropdown = ({
   id,
@@ -11,6 +11,8 @@ const Dropdown = ({
   data,
   children,
   errorMessage,
+  selectedItem,
+  handleItemClick,
 }: DropdownProps) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
   useOnClickOutside(dropdownRef, () => {
@@ -19,33 +21,33 @@ const Dropdown = ({
     }
   });
   const [isOpen, setOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<number | string | null>();
-
   const toggleDropdown = () => setOpen(!isOpen);
-
-  const handleItemClick = (idx: number | string) => {
-    selectedItem === idx ? setSelectedItem(null) : setSelectedItem(idx);
-    setOpen(!isOpen);
-  };
 
   return (
     <>
-      <div className="dropdown-container" ref={dropdownRef}>
+      <div
+        className='dropdown-container'
+        ref={dropdownRef}
+      >
         <label htmlFor={id}>{label}</label>
-        <div className="dropdown">
-          <div id={id} className="dropdown-header" onClick={toggleDropdown}>
-            {selectedItem ? data?.find((item) => item.id)!.name : "Select"}
-            <div className="caret">
-              <MdOutlineArrowDropDown className="open" />
+        <div className='dropdown'>
+          <div
+            id={id}
+            className='dropdown-header'
+            onClick={toggleDropdown}
+          >
+            <p> {selectedItem ? selectedItem : 'Select'}</p>
+            <div className='caret'>
+              <MdOutlineArrowDropDown className='open' />
             </div>
           </div>
-          <div className={`dropdown-body ${isOpen && "open"}`}>
+          <div className={`dropdown-body ${isOpen && 'open'}`}>
             {children}
-            <div className="item-container">
+            <div className='item-container'>
               {data?.map((item) => (
                 <div
-                  className="dropdown-item"
-                  onClick={() => handleItemClick(item.id)}
+                  className='dropdown-item'
+                  onClick={handleItemClick.bind(null, item.id)}
                   key={item.id}
                 >
                   <span className={`dropdown-item-dot`}>•</span>

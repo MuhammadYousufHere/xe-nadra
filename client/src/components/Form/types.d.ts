@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export interface InputProps {
   name: string;
@@ -25,12 +25,14 @@ export interface SearchProps {
 }
 
 export interface DropdownProps {
-  id?: string;
+  id: string;
   label?: string;
-  data?: {
+  data: {
     id: number | string;
     name: string;
   }[];
   children?: React.ReactNode | JSX.Element;
   errorMessage?: string;
+  handleItemClick: (id: string | number) => void;
+  selectedItem?: string | null;
 }
