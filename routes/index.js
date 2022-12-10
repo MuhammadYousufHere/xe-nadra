@@ -6,6 +6,7 @@ const accountSid = process.env.ACCOUNT_SID;
 
 const authToken = process.env.AUTH_TOKEN;
 const phonenumber = process.env.PHONE_NUMBER;
+const messagingServiceSid = process.env.MESSAGING_SERVICE_SID;
 
 function sendSms(phone, message) {
   const client = require('twilio')(accountSid, authToken);
@@ -16,7 +17,12 @@ function sendSms(phone, message) {
       from: phonenumber,
       to: phone,
     })
-    .then((message) => console.log(message.sid));
+    .then(function (res) {
+      console.log(res.body);
+    })
+    .catch(function (err) {
+      console.log(err);
+    });
 }
 // Create user endpoint
 router.post('/', (req, res) => {
@@ -32,7 +38,7 @@ router.post('/', (req, res) => {
 
   try {
     sendSms(user.mobileNum, welcomeMessage);
-    res.status(200).send({
+    res.status(201).send({
       message:
         'Account created successfully, kindly check your phone to activate your account!',
       data: user,
@@ -45,5 +51,7 @@ router.post('/', (req, res) => {
     });
   }
 });
-
+const phoneNumber = function (user) {
+  return '+' + user.countryCode ?? '92' + user.mobileNum;
+};
 module.exports = router;
