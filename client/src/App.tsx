@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import ScrollToTop from './components/common/ScrollToTop';
+
 import Error from './pages/Error';
 import ForgotPassword from './pages/ForgotPassword';
 import Home from './pages/Home';

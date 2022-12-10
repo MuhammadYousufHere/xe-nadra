@@ -22,6 +22,7 @@ export interface SearchProps {
   value?: string;
   name?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
 export interface DropdownProps {

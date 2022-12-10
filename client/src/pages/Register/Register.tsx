@@ -10,32 +10,24 @@ import { useFormValidation, useCountryInfo } from '../../hooks';
 
 import { Wrapper, Button } from '../../components/common';
 import { HiUserPlus } from 'react-icons/hi2';
-import {
-  Dropdown,
-  Input,
-  SearchBar,
-  SearchDropdown,
-} from '../../components/Form';
+import { Dropdown, Input } from '../../components/Form';
 import Loader from '../../components/PreLoader/Loader';
 import Alert from './Alert';
 import Footer from '../Footer';
 import cap from '../../assets/captcha.jpeg';
 import './RegisterStyle.scss';
 import ScrollToTop from '../../components/ScrollTop';
+import DropdownSearch from '../../components/dropdown/dropdownSearch';
 
 const Register = () => {
   const { countries, withPhoneCodes } = useCountryInfo();
   const validate = useFormValidation();
   const navigate = useNavigate();
 
-  const [allCountries, setAllCountries] = useState(countries);
-  const [filter, setFilter] = useState('');
   const [loading, setLoading] = useState(true);
   const [countryCode, setCountryCode] = useState<string | undefined>('+92');
-  const [country, setSelectedCountry] = useState<string | undefined>(
-    'Pakistan'
-  );
-  const [mobileOperater, setMobileOperator] = useState<string | null>();
+  const [country, setSelectedCountry] = useState<string>('');
+  const [mobileOperater, setMobileOperator] = useState<string | undefined>('');
 
   const initialValues = {
     foreName: '',
@@ -82,13 +74,7 @@ const Register = () => {
     validateOnChange: false,
   });
   //
-  // instantant filter data
-  const filteredCountries = (filterTerm: string) => {
-    const res = allCountries.filter((c) =>
-      c.name.toLowerCase().includes(filterTerm.toLowerCase())
-    );
-    return res;
-  };
+
   // filter country codes
   const countryCodeHandler = (countryName: string) =>
     withPhoneCodes.find((c) => c.name === countryName && c)?.phoneCode;
@@ -98,14 +84,10 @@ const Register = () => {
   const handleOperatorClick = (idx: Params) => {
     const itemselected = operators?.find((item) => item.id === idx)?.name;
     setMobileOperator(itemselected);
-
-    console.log({ itemselected, idx });
   };
-  const handleCountryClick = (idx: Params) => {
-    const countrySelected = allCountries?.find((item) => item.id === idx)?.name;
-    setSelectedCountry(countrySelected);
-    setCountryCode(countryCodeHandler(countrySelected!));
-    console.log({ countrySelected, idx });
+
+  const handleCountryClick = () => {
+    setCountryCode(countryCodeHandler(country));
   };
 
   useEffect(() => {
@@ -174,25 +156,19 @@ const Register = () => {
                     onChange={handleChange}
                     error={errors.surname}
                   />
-                  <SearchDropdown
-                    id='country'
+
+                  <DropdownSearch
                     label='Country'
-                    data={allCountries}
-                    errorMessage={errors.country}
-                    selectedItem={country}
-                    handleItemClick={handleCountryClick}
-                  >
-                    <SearchBar
-                      value={filter}
-                      onChange={(e) => {
-                        setFilter(e.target.value);
-                        setAllCountries(filteredCountries(e.target.value));
-                      }}
-                    />
-                  </SearchDropdown>
+                    id='country'
+                    dropDownData={countries}
+                    dropDownItem={country}
+                    setDropdownItem={setSelectedCountry}
+                    selectedName={handleCountryClick}
+                  />
                   <Alert />
+
                   <Dropdown
-                    id='mob-operator'
+                    id='mobileOperater'
                     label='Mobile Operater'
                     selectedItem={mobileOperater}
                     handleItemClick={handleOperatorClick}
