@@ -31,6 +31,17 @@ export interface DropdownProps {
     id: number | string;
     name: string;
   }[];
+  errorMessage?: string;
+  handleItemClick: (id: string | number) => void;
+  selectedItem?: string | null;
+}
+export interface SearchableDropdownProps {
+  id: string;
+  label?: string;
+  data: {
+    id: number | string;
+    name: string;
+  }[];
   children?: React.ReactNode | JSX.Element;
   errorMessage?: string;
   handleItemClick: (id: string | number) => void;

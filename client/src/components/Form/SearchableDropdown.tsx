@@ -1,18 +1,19 @@
+import { FC } from 'react';
+import { SearchableDropdownProps } from './types';
 import { useState, useRef } from 'react';
-import { DropdownProps } from './types.d';
 import { MdOutlineArrowDropDown } from 'react-icons/md';
 import useOnClickOutside from '../../hooks/useClickOutside';
 import './DropDown.scss';
 import ErrorMessage from './ErrorMessage';
-
-const Dropdown = ({
+const SearchableDropdown: FC<SearchableDropdownProps> = ({
   id,
   label,
   data,
+  children,
   errorMessage,
   selectedItem,
   handleItemClick,
-}: DropdownProps) => {
+}) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
   useOnClickOutside(dropdownRef, () => {
     if (dropdownRef.current) {
@@ -41,6 +42,7 @@ const Dropdown = ({
             </div>
           </div>
           <div className={`dropdown-body ${isOpen && 'open'}`}>
+            {children}
             <div className='item-container'>
               {data?.map((item) => (
                 <div
@@ -61,4 +63,4 @@ const Dropdown = ({
   );
 };
 
-export default Dropdown;
+export default SearchableDropdown;

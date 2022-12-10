@@ -10,7 +10,12 @@ import { useFormValidation, useCountryInfo } from '../../hooks';
 
 import { Wrapper, Button } from '../../components/common';
 import { HiUserPlus } from 'react-icons/hi2';
-import { Dropdown, Input, SearchBar } from '../../components/Form';
+import {
+  Dropdown,
+  Input,
+  SearchBar,
+  SearchDropdown,
+} from '../../components/Form';
 import Loader from '../../components/PreLoader/Loader';
 import Alert from './Alert';
 import Footer from '../Footer';
@@ -88,7 +93,7 @@ const Register = () => {
   const countryCodeHandler = (countryName: string) =>
     withPhoneCodes.find((c) => c.name === countryName && c)?.phoneCode;
 
-  //
+  // dropdown handlers
   type Params = string | number;
   const handleOperatorClick = (idx: Params) => {
     const itemselected = operators?.find((item) => item.id === idx)?.name;
@@ -169,7 +174,7 @@ const Register = () => {
                     onChange={handleChange}
                     error={errors.surname}
                   />
-                  <Dropdown
+                  <SearchDropdown
                     id='country'
                     label='Country'
                     data={allCountries}
@@ -184,7 +189,7 @@ const Register = () => {
                         setAllCountries(filteredCountries(e.target.value));
                       }}
                     />
-                  </Dropdown>
+                  </SearchDropdown>
                   <Alert />
                   <Dropdown
                     id='mob-operator'
