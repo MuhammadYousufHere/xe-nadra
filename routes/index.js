@@ -21,6 +21,7 @@ function sendSms(phone, message) {
 // Create user endpoint
 router.post('/', (req, res) => {
   const { email, password, mobileNum } = req.body;
+  console.log(req.body);
   const user = {
     email,
     password,

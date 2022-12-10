@@ -34,7 +34,8 @@ export interface DropdownProps {
   }[];
   errorMessage?: string;
   handleItemClick: (id: string | number) => void;
-  selectedItem?: string | null;
+  selectedItem: string | null;
+  setSelectedItem: React.Dispatch<React.SetStateAction<string>>;
 }
 export interface SearchableDropdownProps {
   id: string;

@@ -26,8 +26,8 @@ const Register = () => {
 
   const [loading, setLoading] = useState(true);
   const [countryCode, setCountryCode] = useState<string | undefined>('+92');
-  const [country, setSelectedCountry] = useState<string>('');
-  const [mobileOperater, setMobileOperator] = useState<string | undefined>('');
+  const [country, setSelectedCountry] = useState('');
+  const [mobileOperater, setMobileOperator] = useState('');
 
   const initialValues = {
     foreName: '',
@@ -36,24 +36,33 @@ const Register = () => {
     mobileOperater,
     mobileNum: '',
     password: '',
-    country,
+    country: '',
     captchacode: '',
     confirmPassword: '',
   };
 
   // form control
-  const { values, handleChange, handleSubmit, errors, resetForm } = useFormik({
+  const {
+    values,
+    handleChange,
+    handleSubmit,
+    errors,
+    resetForm,
+    setFieldValue,
+  } = useFormik({
     initialValues,
     onSubmit: async (values) => {
       console.log(values);
       try {
         // axios post
-        const res = await axios.post('http://localhost:8080/users', values, {
+        const res = await axios.post('/api/users', values, {
           headers: { 'Content-Type': 'application/json' },
         });
         const data = res.data;
         toast(data?.message);
-        navigate('/inprocess');
+        setTimeout(() => {
+          navigate('/inprocess');
+        }, 2000);
         resetForm();
       } catch (error) {
         console.error(error);
@@ -63,7 +72,7 @@ const Register = () => {
       foreName: validate.foreName,
       surname: validate.surname,
       email: validate.email,
-      mobileOperater: validate.mobileOperator,
+      mobileOperater: validate.mobileOperater,
       mobileNum: validate.mobileNum,
       country: validate.country,
       password: validate.password,
@@ -80,16 +89,13 @@ const Register = () => {
     withPhoneCodes.find((c) => c.name === countryName && c)?.phoneCode;
 
   // dropdown handlers
-  type Params = string | number;
-  const handleOperatorClick = (idx: Params) => {
-    const itemselected = operators?.find((item) => item.id === idx)?.name;
-    setMobileOperator(itemselected);
+
+  const handleCountryClick = (cName: string) => {
+    setCountryCode(countryCodeHandler(cName));
+    setFieldValue('country', cName);
   };
 
-  const handleCountryClick = () => {
-    setCountryCode(countryCodeHandler(country));
-  };
-
+  // maunally loading...
   useEffect(() => {
     setInterval(() => {
       setLoading(false);
@@ -163,7 +169,8 @@ const Register = () => {
                     dropDownData={countries}
                     dropDownItem={country}
                     setDropdownItem={setSelectedCountry}
-                    selectedName={handleCountryClick}
+                    selectedCountryName={(cName) => handleCountryClick(cName)}
+                    error={errors.country}
                   />
                   <Alert />
 
@@ -171,9 +178,12 @@ const Register = () => {
                     id='mobileOperater'
                     label='Mobile Operater'
                     selectedItem={mobileOperater}
-                    handleItemClick={handleOperatorClick}
+                    handleItemClick={(OperatorName) =>
+                      setFieldValue('mobileOperater', OperatorName)
+                    }
                     data={operators}
                     errorMessage={errors.mobileOperater}
+                    setSelectedItem={setMobileOperator}
                   />
                   <label htmlFor='mobile-num'>Mobile No</label>
                   <div className='phonenum'>

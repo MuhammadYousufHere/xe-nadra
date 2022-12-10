@@ -4,15 +4,17 @@ import { MdOutlineArrowDropDown } from 'react-icons/md';
 
 import { inputKeyDownAction, itemAction } from './dropdownSearchHelpers';
 import { SearchBar } from '../Form';
+import ErrorMessage from '../Form/ErrorMessage';
 export type DropdownData = Array<{ id: number | string; name: string }>;
 
 export interface DropdownProps {
   dropDownItem: string;
   setDropdownItem: React.Dispatch<React.SetStateAction<string>>;
   dropDownData: DropdownData;
-  selectedName: () => void;
+  selectedCountryName: (name: string) => void;
   id: string;
   label: string;
+  error?: string;
 }
 
 interface DropdownSearchProps extends DropdownProps {
@@ -25,7 +27,8 @@ const DropdownSearch = ({
   dropDownItem,
   setDropdownItem,
   dropDownData,
-  selectedName,
+  selectedCountryName,
+  error,
   strictSearch = false,
 }: DropdownSearchProps) => {
   const ref = React.useRef<HTMLDivElement | null>(null);
@@ -57,69 +60,71 @@ const DropdownSearch = ({
       document.removeEventListener('click', handleClickOutside, true);
     };
   }, [ref]);
-
   return (
-    <div
-      className={`dropdown-container colLayout dropdownBorder ${
-        open ? 'priority' : ''
-      }`}
-      ref={ref}
-    >
-      <label htmlFor={id}>{label}</label>
+    <>
       <div
-        className='dropdown'
-        id={id}
+        className={`dropdown-container colLayout dropdownBorder ${
+          open ? 'priority' : ''
+        }`}
+        ref={ref}
       >
+        <label htmlFor={id}>{label}</label>
         <div
-          className='dropdown-header'
-          onClick={() => {
-            setOpen(!open);
-            setFilteredData(dropDownData);
-          }}
+          className='dropdown'
+          id={id}
         >
-          <p> {dropDownItem ? dropDownItem : 'Select'}</p>
-          <div className='caret'>
-            <MdOutlineArrowDropDown className='open' />
+          <div
+            className='dropdown-header'
+            onClick={() => {
+              setOpen(!open);
+              setFilteredData(dropDownData);
+            }}
+          >
+            <p> {dropDownItem ? dropDownItem : 'Select'}</p>
+            <div className='caret'>
+              <MdOutlineArrowDropDown className='open' />
+            </div>
           </div>
         </div>
-      </div>
 
-      {open && (
-        <div className='dropdown float'>
-          <>
-            <SearchBar
-              type='text'
-              onChange={(e) => setData(e)}
-              onKeyDown={(e) => inputKeyDownAction(e, filteredData)}
-            />
-          </>
-          <div className='item-container'>
-            {filteredData.map((item) => {
-              return (
-                <div
-                  tabIndex={0}
-                  className='dropdown-item'
-                  key={item.id}
-                  onClick={() => {
-                    setDropdownItem(
-                      filteredData.filter(function (i) {
-                        return i.name === item.name;
-                      })[0].name
-                    );
-                    setOpen(false);
-                    selectedName();
-                  }}
-                  onKeyDown={(e) => itemAction(e)}
-                >
-                  <span className={`dropdown-item-dot`}>•</span>
-                  {item.name}
-                </div>
-              );
-            })}
+        {open && (
+          <div className='dropdown float'>
+            <>
+              <SearchBar
+                type='text'
+                onChange={(e) => setData(e)}
+                onKeyDown={(e) => inputKeyDownAction(e, filteredData)}
+              />
+            </>
+            <div className='item-container'>
+              {filteredData.map((item) => {
+                return (
+                  <div
+                    tabIndex={0}
+                    className='dropdown-item'
+                    key={item.id}
+                    onClick={() => {
+                      setDropdownItem(item.name);
+                      //  filteredData.filter(function (i) {
+                      //    return i.name === item.name;
+                      //  })[0].name;
+
+                      selectedCountryName(item.name);
+                      setOpen(false);
+                    }}
+                    onKeyDown={(e) => itemAction(e)}
+                  >
+                    <span className={`dropdown-item-dot`}>•</span>
+                    {item.name}
+                  </div>
+                );
+              })}
+            </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+      {error && <ErrorMessage message={error} />}
+    </>
   );
 };
 

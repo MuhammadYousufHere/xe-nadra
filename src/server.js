@@ -28,7 +28,7 @@ app.get('/api', (req, res) => {
   res.json({ message: 'Welcome to the application.' });
 });
 
-app.use('/users', router);
+app.use('/api/users', router);
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
 });

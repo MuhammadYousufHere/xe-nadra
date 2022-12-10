@@ -11,6 +11,7 @@ const Dropdown = ({
   data,
   errorMessage,
   selectedItem,
+  setSelectedItem,
   handleItemClick,
 }: DropdownProps) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -45,7 +46,12 @@ const Dropdown = ({
               {data?.map((item) => (
                 <div
                   className='dropdown-item'
-                  onClick={handleItemClick.bind(null, item.id)}
+                  // onClick={handleItemClick.bind(null, item.id)}
+                  onClick={() => {
+                    setSelectedItem(item.name);
+                    handleItemClick(item.name);
+                    setOpen(false);
+                  }}
                   key={item.id}
                 >
                   <span className={`dropdown-item-dot`}>•</span>
@@ -56,7 +62,7 @@ const Dropdown = ({
           </div>
         </div>
       </div>
-      {errorMessage && <ErrorMessage error={errorMessage} />}
+      {errorMessage && <ErrorMessage message={errorMessage} />}
     </>
   );
 };
