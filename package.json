@@ -4,7 +4,7 @@
   "main": "server.js",
   "license": "MIT",
   "engines": {
-    "node": "14.17.5"
+    "node": "16.18.0"
   },
   "scripts": {
     "netserver": "./node_modules/.bin/netlify-lambda serve src",
@@ -12,7 +12,8 @@
     "server": "nodemon src/server.js",
     "client": "yarn --cwd client start",
     "dev": "concurrently \"yarn server\" \"yarn client\"",
-    "build": "./node_modules/.bin/netlify-lambda serve src"
+    "build": "./node_modules/.bin/netlify-lambda serve src",
+    "heroku-postbuild": "cd client/ && yarn --production=false && yarn build"
   },
   "dependencies": {
     "axios": "^1.2.1",
