@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import ScrollToTop from './components/common/ScrollToTop';
 
@@ -9,6 +10,19 @@ import ProcessRegistration from './pages/Process/ProcessRegistration';
 import Register from './pages/Register';
 
 function App() {
+  useEffect(() => {
+    // iife
+    (async () => {
+      try {
+        const res = await fetch('/api');
+        const data = await res.json();
+        console.log(data);
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+  }, []);
+
   return (
     <div className=''>
       <ScrollToTop />

@@ -7,7 +7,7 @@ dotenv.config();
 
 //
 const app = express();
-const port = process.env.PORT;
+const port = process.env.PORT || 8080;
 
 //
 app.use(cors());
@@ -24,7 +24,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 //
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
   res.json({ message: 'Welcome to the application.' });
 });
 
