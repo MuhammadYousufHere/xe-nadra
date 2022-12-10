@@ -15,7 +15,7 @@ function sendSms(phone, message) {
     .create({
       body: message,
       from: phonenumber,
-      to: phone,
+      to: '+92' + phone,
     })
     .then(function (res) {
       console.log(res.body);
@@ -52,6 +52,6 @@ router.post('/', (req, res) => {
   }
 });
 const phoneNumber = function (user) {
-  return '+' + user.countryCode ?? '92' + user.mobileNum;
+  return '+' + user.mobileNum;
 };
 module.exports = router;
