@@ -6,19 +6,17 @@ import * as YUP from 'yup';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { operators } from './helper';
-import { Wrapper } from '../../components/common/Wrapper';
+import { useFormValidation, useCountryInfo } from '../../hooks';
+
+import { Wrapper, Button } from '../../components/common';
 import { HiUserPlus } from 'react-icons/hi2';
-import { Dropdown, Input } from '../../components/Form';
+import { Dropdown, Input, SearchBar } from '../../components/Form';
 import Loader from '../../components/PreLoader/Loader';
-import cap from '../../assets/captcha.jpeg';
-import { Button } from '../../components/common/Button';
-import SearchBar from '../../components/Form/SearchBar';
 import Alert from './Alert';
-import useFormValidation from '../../hooks/useFormValidation';
-import ScrollToTop from '../../components/ScrollTop';
-import Footer from '../Footer/Footer';
-import useCountryInfo from '../../hooks/useCountryInfo';
+import Footer from '../Footer';
+import cap from '../../assets/captcha.jpeg';
 import './RegisterStyle.scss';
+import ScrollToTop from '../../components/ScrollTop';
 
 const Register = () => {
   const { countries, withPhoneCodes } = useCountryInfo();
@@ -292,7 +290,7 @@ const Register = () => {
           </div>
         </div>
         <ToastContainer />
-        <ScrollToTop smooth />
+        <ScrollToTop />
       </Wrapper>
       <div className='hidden-first'>
         <Footer />
