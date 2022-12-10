@@ -249,4 +249,14 @@
   .hidden-first {
     display: block;
   }
+  .top-reg .left h1,
+  .top-reg .right h1 {
+    font-size: 1.5rem;
+    margin: 0;
+  }
+  .top-reg .left h3,
+  .top-reg .right h3 {
+    text-align: center;
+    font-size: 1rem;
+  }
 }

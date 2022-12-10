@@ -281,7 +281,7 @@ const Register = () => {
           </div>
         </div>
         <ToastContainer />
-        <ScrollToTop />
+        <ScrollToTop smooth />
       </Wrapper>
       <div className='hidden-first'>
         <Footer />
