@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "server.js",
   "license": "MIT",
+  "engines": {
+    "node": ">=16"
+  },
   "scripts": {
     "netserver": "./node_modules/.bin/netlify-lambda serve src",
     "start": "node src/server.js",
