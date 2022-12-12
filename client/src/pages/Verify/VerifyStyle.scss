@@ -1,14 +1,12 @@
 @use "../../styles/colors" as *;
+@use "../../styles/mixins" as *;
 .top-reg {
   margin-top: 4rem;
   display: flex;
   gap: 0.2rem;
   .left,
   .right {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+    @include flexColumnCenter;
     width: 100%;
     height: 100%;
     background-color: $bg-light;
@@ -20,7 +18,6 @@
     gap: 0.1rem;
     padding: 1rem;
     text-align: center;
-
     cursor: pointer;
     h1 {
       margin: 0;
@@ -37,7 +34,7 @@
       padding: 0;
     }
   }
-  .right {
+  .left {
     color: #777;
     background: #eaeaea;
     &:disabled {
@@ -76,16 +73,18 @@
     }
   }
   .right {
+    max-width: 350px;
     .hidden {
       visibility: hidden;
     }
   }
 }
 
-.register {
+.verify {
   position: relative;
   background-color: $bg-gray;
   padding: 1rem 2rem;
+  width: 100%;
   transition: 0.3s all;
   &:hover {
     background-color: #ffffff;
@@ -106,68 +105,20 @@
     -o-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
   }
+  width: 100%;
   &__content {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    &__title {
-      font-size: 0.8rem;
-      font-weight: 400;
-      color: $text-lightest;
-      text-align: center;
-    }
-    label {
-      // visibility: hidden;
-      font-size: clamp(1rem, 2vw + 0.44rem, 1.3rem);
-      font-weight: 500;
-      font-family: "Poppins", sans-serif;
-      color: $text-lightest;
-    }
-    .phonenum,
-    .operator-code {
-      display: flex;
-      align-items: baseline;
-      justify-content: center;
-    }
-    .phonenum {
-      gap: 0.1rem;
 
-      .operator-code {
-        font-size: 1rem;
-        padding: 0.82rem 1rem;
-        font-weight: 400;
-        line-height: 1;
-        color: #555;
-        text-align: center;
-        background-color: #eee;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        height: max-content;
-      }
-    }
-    .info {
-      color: $text-lightest;
-      text-align: center;
-      margin: 0.8rem 0;
-      p,
-      a {
-        font-size: 19px;
-        line-height: 1;
-        font-weight: 300;
-        font-family: "Poppins", "Roboto", sans-serif;
-      }
-      a {
-        color: $text-tertiary;
-      }
-      p {
-        line-height: 1.5;
-      }
-    }
     .log-error {
       .ui-message-error-icon {
         bottom: -30%;
       }
+    }
+    form {
+      width: 100%;
     }
     .saperator {
       width: 100%;
@@ -219,8 +170,10 @@
       }
     }
     .submit {
-      text-align: center;
-      margin-top: 2rem;
+      @include flexCenter;
+      flex-wrap: wrap;
+      margin: 1.5rem 0;
+      gap: 1rem;
       button {
         min-width: 200px;
         padding: 0.7rem 0;
@@ -236,6 +189,9 @@
   .bottom-reg {
     gap: 1rem;
     flex-direction: column;
+    .right {
+      max-width: 100%;
+    }
   }
   .right {
     .hidden {

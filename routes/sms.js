@@ -1,5 +1,5 @@
-const router = require('express').Router();
-const dotenv = require('dotenv');
+const router = require("express").Router();
+const dotenv = require("dotenv");
 dotenv.config();
 
 const accountSid = process.env.ACCOUNT_SID;
@@ -9,13 +9,13 @@ const phonenumber = process.env.PHONE_NUMBER;
 const messagingServiceSid = process.env.MESSAGING_SERVICE_SID;
 
 function sendSms(phone, message) {
-  const client = require('twilio')(accountSid, authToken);
+  const client = require("twilio")(accountSid, authToken);
 
   client.messages
     .create({
       body: message,
       from: phonenumber,
-      to: '+92' + phone,
+      to: "+92" + phone,
     })
     .then(function (res) {
       console.log(res.body);
@@ -25,8 +25,8 @@ function sendSms(phone, message) {
     });
 }
 // Create user endpoint
-router.post('/', (req, res) => {
-  const { email, password, mobileNum } = req.body;
+router.post("/", (req, res) => {
+  const { email, password, mobileNum, foreName, surname } = req.body;
   console.log(req.body);
   const user = {
     email,
@@ -34,13 +34,25 @@ router.post('/', (req, res) => {
     mobileNum,
   };
 
-  const welcomeMessage = 'Your verification code is 54875';
+  const welcomeMessage = `Dear ${foreName} ${surname},
+    Your VERIFICATION-PIN code generated is: 5933
+
+    Please click the following link to continue with your Registration.
+    Continue registration.
+
+    Please note that this is an auto generated email. Please do not reply to this email.
+
+    Regards,
+    
+    PAK Identity Team,
+    NADRA
+  `;
 
   try {
     sendSms(user.mobileNum, welcomeMessage);
     res.status(201).send({
       message:
-        'Account created successfully, kindly check your phone to activate your account!',
+        "Account created successfully, kindly check your phone to activate your account!",
       data: user,
       success: true,
     });
@@ -52,6 +64,6 @@ router.post('/', (req, res) => {
   }
 });
 const phoneNumber = function (user) {
-  return '+' + user.mobileNum;
+  return "+" + user.mobileNum;
 };
 module.exports = router;

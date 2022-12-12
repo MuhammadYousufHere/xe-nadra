@@ -61,7 +61,9 @@
     color: #fff;
   }
 }
-.btn-outlined {
+.btn-danger {
+  @extend .btn-secondary;
+  background-color: $bg_danger;
 }
 
 .btn-pill {
