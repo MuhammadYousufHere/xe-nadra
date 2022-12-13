@@ -1,7 +1,7 @@
-const express = require('express');
-const User = require('../model/User');
-const { setEmail } = require('./email');
-const { check, validationResult } = require('express-validator');
+const express = require("express");
+const User = require("../model/User");
+const { setEmail } = require("./email");
+const { check, validationResult } = require("express-validator");
 // using express routes
 const router = express.Router();
 
@@ -12,8 +12,8 @@ const router = express.Router();
 //
 
 router.post(
-  '/',
-  [check('email', 'Please enter your valid email').isEmail()],
+  "/",
+  [check("email", "Please enter your valid email").isEmail()],
 
   async (req, res) => {
     const errors = validationResult(req);
@@ -31,13 +31,13 @@ router.post(
       let user = await User.findOne({ email });
       if (!user) {
         return res.status(400).json({
-          msg: 'Provided Email Address is Not Registered with PAK IDENTITY',
+          msg: "Provided Email Address is Not Registered with PAK IDENTITY",
         });
       }
       //CHECK IF varified
       if (!user.verified) {
         return res.status(400).json({
-          msg: 'Please verify your email address first',
+          msg: "Please verify your email address first",
         });
       }
       const Message = `Dear ${user.foreName} ${user.surname},
@@ -51,13 +51,16 @@ router.post(
     PAK Identity Team,
     NADRA
   `;
-      const title = 'Reset Your Password';
+      const title = "Reset Your Password";
       setEmail(email, Message, title);
 
-      res.json({ msg: 'Email sent susseefully', status: 200 });
+      res.json({
+        msg: "Request launched. For further processing, please wait for email/sms",
+        msgStatus: 200,
+      });
     } catch (error) {
       console.error(error.message);
-      res.status(500).send('Server Error');
+      res.status(500).send("Server Error");
     }
   }
 );

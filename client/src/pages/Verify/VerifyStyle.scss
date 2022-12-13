@@ -37,6 +37,7 @@
   .left {
     color: #777;
     background: #eaeaea;
+    height: auto;
     &:disabled {
       cursor: not-allowed;
     }

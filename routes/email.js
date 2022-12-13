@@ -1,7 +1,7 @@
-const nodemailer = require('nodemailer');
-require('dotenv').config();
+const nodemailer = require("nodemailer");
+require("dotenv").config();
 let mailerConfig = {
-  host: 'smtp.gmail.com',
+  host: "smtp.gmail.com",
   secureConnection: true,
   port: 465,
   auth: {
@@ -16,10 +16,10 @@ const sendEmail = (config) =>
     transporter.sendMail(config, function (error) {
       if (error) {
         rej(error);
-        console.log('error:', error);
+        console.log("error:", error);
       } else {
-        res('Sent');
-        console.log('good');
+        res("Sent");
+        console.log("good");
       }
     });
   });
@@ -34,14 +34,14 @@ const params = (email, text, title) => ({
 const setEmail = (
   emailTo,
   message = template(),
-  title = 'Thank You For Your Donation!'
+  title = "Thank You For Your Donation!"
 ) =>
   new Promise(async (res, rej) => {
     try {
       const config = params(emailTo, message, title);
       await sendEmail(config);
     } catch (error) {
-      console.log('🚀 ~ file: email.js ~ line 36 ~ setEmail ~ error', error);
+      console.log("🚀 ~ file: email.js ~ line 36 ~ setEmail ~ error", error);
     }
   });
 

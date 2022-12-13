@@ -1,4 +1,4 @@
-const dotenv = require('dotenv');
+const dotenv = require("dotenv");
 dotenv.config();
 
 const accountSid = process.env.ACCOUNT_SID;
@@ -7,16 +7,16 @@ const authToken = process.env.AUTH_TOKEN;
 const phonenumber = process.env.PHONE_NUMBER;
 
 function sendSms(phone, message) {
-  const client = require('twilio')(accountSid, authToken);
+  const client = require("twilio")(accountSid, authToken);
 
   client.messages
     .create({
       body: message,
       from: phonenumber,
-      to: '+92' + phone,
+      to: "+92" + phone,
     })
     .then(function (res) {
-      console.log(res.dateSent);
+      console.log(res.body);
     })
     .catch(function (err) {
       console.log(err);
@@ -24,6 +24,6 @@ function sendSms(phone, message) {
 }
 
 const phoneNumber = function (user) {
-  return '+' + user.mobileNum;
+  return "+" + user.mobileNum;
 };
 module.exports.sendSms = sendSms;

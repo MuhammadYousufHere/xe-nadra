@@ -23,10 +23,12 @@ router.post(
       const { email, code } = req.body;
       const user = await User.findOne({ email });
       if (!user) {
-        return res.status(404).json({ message: "User not found" });
+        return res.status(404).json({ msg: "User not found" });
       }
       if (user.verified === true) {
-        return res.status(400).json({ message: "User already verified" });
+        return res
+          .status(400)
+          .json({ msg: "User already verified", msgStatus: 400 });
       }
       //check if match
 
@@ -35,6 +37,7 @@ router.post(
       if (!isMatch) {
         return res.status(400).json({
           msg: "Invalid Code",
+          msgStatus: 400,
         });
       }
       await User.findOneAndUpdate(
@@ -45,11 +48,11 @@ router.post(
         }
       );
       res.status(200).json({
-        message: "Verification successful",
-        success: true,
+        msg: "Verification successful",
+        msgStatus: 200,
       });
     } catch (err) {
-      return res.status(400).json({ message: err, status: "failed" });
+      return res.status(500).json({ msg: err.message, msgStatus: 500 });
     }
   }
 );

@@ -1,9 +1,9 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-import { UserLogin, Error } from '../api';
+import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
+import { UserLogin, Error } from "../api";
 type EmailSent = {
   msg: string;
-  status: number;
+  msgStatus: number;
 };
 type User = {
   token: string;
@@ -12,20 +12,30 @@ type User = {
   email: string;
   isAuthenticated: boolean;
 };
+export interface UserState {
+  loading: boolean;
+  error: Error | null;
+  user: User | null;
+  isSuccess: boolean;
+  emailSent: EmailSent;
+  reset: PasswordReset;
+  resendCode: PasswordReset;
+}
 //
 
 export const loginUser = createAsyncThunk(
-  'api/auth',
+  "api/auth",
   async (userData: UserLogin, { rejectWithValue }) => {
     try {
-      const response = await axios.post('/api/auth', userData);
+      const response = await axios.post("/api/auth", userData);
       if (response.data) {
-        localStorage.setItem('token', JSON.stringify(response.data));
+        localStorage.setItem("token", JSON.stringify(response.data));
       }
       return response.data;
     } catch (err) {
       if (axios.isAxiosError(err) && err.response) {
         const msg = err.response?.data.msg;
+        console.log(msg);
         const msgStatus = err.response.status;
         return rejectWithValue({ msg, msgStatus });
       }
@@ -33,10 +43,10 @@ export const loginUser = createAsyncThunk(
   }
 );
 export const forgotPasswordHandler = createAsyncThunk(
-  'api/forgotpassword',
+  "api/forgotpassword",
   async (userData: { email: string }, { rejectWithValue }) => {
     try {
-      const response = await axios.post('/api/forgotpassword', userData);
+      const response = await axios.post("/api/forgotpassword", userData);
 
       return response.data;
     } catch (err) {
@@ -49,13 +59,13 @@ export const forgotPasswordHandler = createAsyncThunk(
   }
 );
 export const resetPassword = createAsyncThunk(
-  'api/resetpassword',
+  "api/resetpassword",
   async (
     userData: { password: string; email: string },
     { rejectWithValue }
   ) => {
     try {
-      const response = await axios.post('/api/resetpassword', userData);
+      const response = await axios.post("/api/resetpassword", userData);
 
       return response.data;
     } catch (err) {
@@ -67,18 +77,27 @@ export const resetPassword = createAsyncThunk(
     }
   }
 );
+export const resendCodeHandler = createAsyncThunk(
+  "api/resendcode",
+  async (userData: { email: string }, { rejectWithValue }) => {
+    try {
+      const response = await axios.post("/api/resendcode", userData);
+
+      return response.data;
+    } catch (err) {
+      if (axios.isAxiosError(err) && err.response) {
+        const msg = err.response?.data.msg;
+        const msgStatus = err.response.status;
+        return rejectWithValue({ msg, msgStatus });
+      }
+    }
+  }
+);
+
 type PasswordReset = {
-  message: string;
-  status: number;
+  msg: string;
+  msgStatus: number;
 };
-export interface UserState {
-  loading: boolean;
-  error: Error | null;
-  user: User | null;
-  isSuccess: boolean;
-  emailSent: EmailSent;
-  reset: PasswordReset;
-}
 
 const initialState: UserState = {
   loading: false,
@@ -90,10 +109,11 @@ const initialState: UserState = {
   isSuccess: false,
   emailSent: {} as EmailSent,
   reset: {} as PasswordReset,
+  resendCode: {} as PasswordReset,
 };
 
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
     reset: (state) => {
@@ -144,6 +164,22 @@ const authSlice = createSlice({
         }
       )
       .addCase(resetPassword.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as Error;
+        state.isSuccess = false;
+      })
+      .addCase(resendCodeHandler.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(
+        resendCodeHandler.fulfilled,
+        (state, action: PayloadAction<PasswordReset>) => {
+          state.loading = false;
+          state.resendCode = action.payload;
+          state.isSuccess = true;
+        }
+      )
+      .addCase(resendCodeHandler.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as Error;
         state.isSuccess = false;

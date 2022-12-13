@@ -1,8 +1,6 @@
-const mongoose = require('mongoose');
-
-require('dotenv').config();
-
-const db = process.env.MONGO_URI;
+const mongoose = require("mongoose"),
+  config = require("config"),
+  db = config.get("mongoURI");
 
 // using async/await (new standard)
 
@@ -11,7 +9,7 @@ const connectMongoBD = async () => {
     await mongoose.connect(db, {
       useNewURLParser: true,
     });
-    console.log('MongoDB connected!');
+    console.log("MongoDB connected!");
   } catch (error) {
     console.error(error.message);
     // exit the process with failure

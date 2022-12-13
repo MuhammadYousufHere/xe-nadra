@@ -1,0 +1,4 @@
+{
+  "mongoURI": "mongodb+srv://yousufbecomeMern:iamMERN_1267@newdevconnector.eerb9dl.mongodb.net/?retryWrites=true&w=majority",
+  "jwtSecret": "IwasRejected"
+}
