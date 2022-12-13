@@ -1,6 +1,6 @@
-import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-import { UserLogin, Error } from "../api";
+import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
+import { UserLogin, Error } from '../api';
 type EmailSent = {
   msg: string;
   msgStatus: number;
@@ -24,12 +24,12 @@ export interface UserState {
 //
 
 export const loginUser = createAsyncThunk(
-  "api/auth",
+  'api/auth',
   async (userData: UserLogin, { rejectWithValue }) => {
     try {
-      const response = await axios.post("/api/auth", userData);
+      const response = await axios.post('/api/auth', userData);
       if (response.data) {
-        localStorage.setItem("token", JSON.stringify(response.data));
+        localStorage.setItem('token', JSON.stringify(response.data));
       }
       return response.data;
     } catch (err) {
@@ -43,10 +43,10 @@ export const loginUser = createAsyncThunk(
   }
 );
 export const forgotPasswordHandler = createAsyncThunk(
-  "api/forgotpassword",
+  'api/forgotpassword',
   async (userData: { email: string }, { rejectWithValue }) => {
     try {
-      const response = await axios.post("/api/forgotpassword", userData);
+      const response = await axios.post('/api/forgotpassword', userData);
 
       return response.data;
     } catch (err) {
@@ -59,13 +59,13 @@ export const forgotPasswordHandler = createAsyncThunk(
   }
 );
 export const resetPassword = createAsyncThunk(
-  "api/resetpassword",
+  'api/resetpassword',
   async (
     userData: { password: string; email: string },
     { rejectWithValue }
   ) => {
     try {
-      const response = await axios.post("/api/resetpassword", userData);
+      const response = await axios.post('/api/resetpassword', userData);
 
       return response.data;
     } catch (err) {
@@ -78,10 +78,10 @@ export const resetPassword = createAsyncThunk(
   }
 );
 export const resendCodeHandler = createAsyncThunk(
-  "api/resendcode",
+  'api/resendcode',
   async (userData: { email: string }, { rejectWithValue }) => {
     try {
-      const response = await axios.post("/api/resendcode", userData);
+      const response = await axios.post('/api/resendcode', userData);
 
       return response.data;
     } catch (err) {
@@ -113,12 +113,14 @@ const initialState: UserState = {
 };
 
 const authSlice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState,
   reducers: {
-    reset: (state) => {
+    resetState: (state) => {
       state.loading = false;
       state.isSuccess = false;
+      state.error = {} as Error;
+      state.reset = {} as PasswordReset;
     },
   },
   extraReducers: function (builder) {
@@ -187,3 +189,4 @@ const authSlice = createSlice({
   },
 });
 export default authSlice.reducer;
+export const { resetState } = authSlice.actions;

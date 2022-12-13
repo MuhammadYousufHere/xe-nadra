@@ -1,29 +1,31 @@
-import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-
+import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
+type Success = {
+  success: boolean;
+};
 export interface CaptchaState {
-  loading: boolean;
+  isLoading: boolean;
   error: Error | null;
-  isSuccess: boolean;
+  isSuccess: Success;
 }
 //
 
 const initialState = {
-  loading: false,
+  isLoading: false,
   error: {} as Error,
 
   isSuccess: false,
 };
 export const CAPTCHA = createAsyncThunk(
-  "/api/captcha",
+  '/api/captcha',
   async (token: string, { rejectWithValue }) => {
     try {
       const result = await axios.post(
-        "/api/captcha",
+        '/api/captcha',
         { token },
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         }
       );
@@ -38,26 +40,26 @@ export const CAPTCHA = createAsyncThunk(
   }
 );
 const captchaSlice = createSlice({
-  name: "captcha",
+  name: 'captcha',
   initialState,
   reducers: {
     reset: (state) => {
-      state.loading = false;
+      state.isLoading = false;
       state.isSuccess = false;
+      state.error = {} as Error;
     },
   },
   extraReducers: function (builder) {
     builder
       .addCase(CAPTCHA.pending, (state) => {
-        state.loading = true;
+        state.isLoading = true;
       })
-      .addCase(CAPTCHA.fulfilled, (state, action) => {
-        state.loading = false;
-
-        state.isSuccess = true;
+      .addCase(CAPTCHA.fulfilled, (state, action: PayloadAction<Success>) => {
+        state.isLoading = false;
+        state.isSuccess = action.payload.success;
       })
       .addCase(CAPTCHA.rejected, (state, action) => {
-        state.loading = false;
+        state.isLoading = false;
         state.error = action.payload as Error;
         state.isSuccess = false;
       });

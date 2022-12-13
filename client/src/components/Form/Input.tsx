@@ -1,7 +1,7 @@
-import { FC } from "react";
-import ErrorMessage from "./ErrorMessage";
-import "./inputStyles.scss";
-import { InputProps } from "./types";
+import { FC } from 'react';
+import ErrorMessage from './ErrorMessage';
+import './inputStyles.scss';
+import { InputProps } from './types';
 const Input: FC<InputProps> = (props) => {
   const {
     label,
@@ -16,10 +16,10 @@ const Input: FC<InputProps> = (props) => {
     error,
   } = props;
   return (
-    <section className="ui-input-container">
-      <div className="input-group">
+    <section className='ui-input-container'>
+      <div className='input-group'>
         <label htmlFor={id}>{label}</label>
-        <div className="input-box">
+        <div className='input-box'>
           <input
             type={type}
             id={id}
@@ -30,7 +30,10 @@ const Input: FC<InputProps> = (props) => {
           />
 
           {icon && (
-            <div onClick={onToggle} className="input-icon">
+            <div
+              onClick={onToggle}
+              className='input-icon'
+            >
               {icon}
             </div>
           )}

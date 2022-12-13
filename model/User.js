@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 // schema
 const Schema = mongoose.Schema;
 
@@ -22,6 +22,7 @@ const userSchema = new Schema({
   },
   mobileOperater: {
     type: String,
+    required: true,
   },
   mobileNum: {
     type: Number,
@@ -47,4 +48,4 @@ const userSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model('User', userSchema);

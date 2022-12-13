@@ -7,7 +7,6 @@ import { Wrapper } from '../../components/common/Wrapper';
 import { Input } from '../../components/Form';
 import Loader from '../../components/PreLoader/Loader';
 import { Button } from '../../components/common/Button';
-import cap from '../../assets/captcha.jpeg';
 import * as YUP from 'yup';
 import './LoginStyle.scss';
 import { useFormik } from 'formik';
@@ -16,12 +15,14 @@ import Footer from '../Footer/Footer';
 import { useAppDispatch, useAppSelector } from '../../features/hooks';
 import { loginUser } from '../../features/slices/authSlice';
 import ErrorMessage from '../../components/Form/ErrorMessage';
+import Captcha from '../../components/Captcha';
 
 const Login = () => {
   const validate = useFormValidation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { error, loading, user } = useAppSelector((state) => state.auth);
+  const { isSuccess } = useAppSelector((state) => state.captcha);
 
   const [logError, setLogError] = useState<string | undefined>('');
   const [show, setShow] = useState(false);
@@ -30,7 +31,15 @@ const Login = () => {
     password: '',
     captchacode: '',
   };
-  const { resetForm, errors, values, handleChange, handleSubmit } = useFormik({
+  const {
+    resetForm,
+    setFieldValue,
+    touched,
+    errors,
+    values,
+    handleChange,
+    handleSubmit,
+  } = useFormik({
     initialValues,
     onSubmit: (values) => {
       dispatch(loginUser({ email: values.email, password: values.password }));
@@ -51,6 +60,11 @@ const Login = () => {
       setLogError(error?.msg);
     }
   }, [loading, error]);
+  useEffect(() => {
+    if (isSuccess) {
+      setFieldValue('captchacode', isSuccess);
+    }
+  }, [isSuccess, setFieldValue]);
   if (loading) {
     return (
       <Wrapper>
@@ -101,22 +115,13 @@ const Login = () => {
               />
               <div className='captcha-part'>
                 <div className='captcha'>
-                  <img
-                    src={cap}
-                    alt='cap'
-                  />
+                  <Captcha />
+                  {errors.captchacode && touched.captchacode && (
+                    <ErrorMessage message={errors.captchacode} />
+                  )}
                   <Link to='/register'>Create New Account</Link>
                 </div>
                 <div className='confirm'>
-                  <Input
-                    type='text'
-                    name='captchacode'
-                    id='captchacode'
-                    label='Code'
-                    value={values.captchacode}
-                    onChange={handleChange}
-                    error={errors.captchacode}
-                  />
                   <div className='link'>
                     <Link to='/forgotpassword'>Forgot Password ?</Link>
                   </div>

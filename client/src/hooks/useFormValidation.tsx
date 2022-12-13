@@ -18,7 +18,7 @@ const useFormValidation = () => {
     [YUP.ref('password'), null],
     'Passwords must match'
   );
-  const captchacode = YUP.string().required('Code required');
+  const captchacode = YUP.string().required('Please verify captcha');
   const code = YUP.string().required('Pin required');
   return {
     foreName,

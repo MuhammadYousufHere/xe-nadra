@@ -1,36 +1,36 @@
-import "./captcha.scss";
-import ReCaptcha from "react-google-recaptcha";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import './captcha.scss';
+import ReCaptcha from 'react-google-recaptcha';
+import { useAppDispatch } from '../../features/hooks';
+import { CAPTCHA } from '../../features/slices/captchaSlice';
 const sitekey = process.env.REACT_APP_CAPTCHA_SITE_KEY!;
-const Captcha = ({ isHumain }: { isHumain: (value: any) => void }) => {
-  const [data, setData] = useState(false);
-  const verify = async (value: string) => {
-    const result = await axios.post(
-      "/api/captcha",
-      { token: value },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    setData(result.data);
-    try {
-    } catch (error) {
-      console.log(error);
-    }
+const Captcha = () => {
+  const dispatch = useAppDispatch();
+  const verify = async (value: string | null) => {
+    if (typeof value === 'string') dispatch(CAPTCHA(value));
   };
-  useEffect(() => {}, []);
   return (
-    <>
+    <div className='captcha-box'>
       <ReCaptcha
-        onChange={(token) => verify(token!)}
+        onChange={(token) => verify(token)}
         sitekey={sitekey}
-        onClick={isHumain.bind(null, { data })}
       />
-    </>
+    </div>
   );
 };
 
 export default Captcha;
+
+// const result = await axios.post<Data>(
+//   '/api/captcha',
+//   { token: value },
+//   {
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//   }
+// );
+// setData(result.data.success);
+// try {
+// } catch (error) {
+//   console.log(error);
+// }

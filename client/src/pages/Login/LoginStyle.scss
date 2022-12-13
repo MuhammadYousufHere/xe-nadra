@@ -53,6 +53,8 @@
         }
       }
       .confirm {
+        display: flex;
+        align-items: flex-end;
         .link {
           text-align: right;
         }
@@ -83,7 +85,14 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
+  .login {
+    &__content {
+      form {
+        width: 100%;
+      }
+    }
+  }
 }
 @media screen and (max-width: 480px) {
   .login {
