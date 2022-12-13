@@ -32,6 +32,10 @@ router.post(
             'Password can not be old passowrd, Please try again with another password.',
         });
       }
+      //Encrypt password
+      const salt = await bycrypt.genSalt(10);
+
+      password = await bycrypt.hash(password, salt);
       await User.findOneAndUpdate(
         { email },
         { password },

@@ -106,7 +106,8 @@ router.post(
 
       jsonwebtoken.sign(
         payload,
-        config.get('jwtSecret'),
+        // config.get('jwtSecret'),
+        process.env.JWT_SECRET,
         // optional but recommended, set it to 1hr in production build
         { expiresIn: 36000 },
         (error, token) => {
