@@ -1,5 +1,5 @@
-@use "../../styles/colors" as *;
-@use "../../styles/mixins" as *;
+@use '../../styles/colors' as *;
+@use '../../styles/mixins' as *;
 
 .termsncondition {
   @include fontStack;
@@ -34,8 +34,9 @@
       }
     }
     .scrollview {
-      min-height: 450px;
-      overflow: auto;
+      max-height: 450px;
+      overflow: scroll;
+      padding: 1rem;
     }
     .saperator {
       @include seperator($bg-gray);

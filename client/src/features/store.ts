@@ -1,9 +1,11 @@
-import { configureStore } from "@reduxjs/toolkit";
-import userReduer from "./slices/userSlice";
+import { configureStore } from '@reduxjs/toolkit';
+import userReduer from './slices/userSlice';
+import authReducer from './slices/authSlice';
 
 export const store = configureStore({
   reducer: {
     user: userReduer,
+    auth: authReducer,
   },
 });
 // ReturnType =>  TS utility that allows to transform the type definition of a function into it's return type

@@ -11,9 +11,18 @@ import { IoEllipsisHorizontal } from 'react-icons/io5';
 import { useFormik } from 'formik';
 import useFormValidation from '../../hooks/useFormValidation';
 import Footer from '../Footer/Footer';
+import { Message } from '../../components/common/Message';
+import { useAppDispatch, useAppSelector } from '../../features/hooks';
+import { forgotPasswordHandler } from '../../features/slices/authSlice';
+import ErrorMessage from '../../components/Form/ErrorMessage';
 const ForgotPassword = () => {
+  const { emailSent, error, loading } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
+  const [show, setShow] = useState(false);
+  const [message, setMessage] = useState('');
+  const [logError, setError] = useState('');
+
   const validate = useFormValidation();
   const initialValues = {
     email: '',
@@ -21,9 +30,8 @@ const ForgotPassword = () => {
   };
   const { errors, values, handleSubmit, handleChange, resetForm } = useFormik({
     initialValues,
-    onSubmit: (values) => {
-      console.log(values);
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: (forData) => {
+      dispatch(forgotPasswordHandler({ email: forData.email }));
       resetForm();
     },
     validationSchema: YUP.object().shape({
@@ -34,10 +42,15 @@ const ForgotPassword = () => {
     validateOnChange: false,
   });
   useEffect(() => {
-    setInterval(() => {
-      setLoading(false);
-    }, 1000);
-  }, []);
+    if (emailSent?.status === 200) {
+      setShow(true);
+      setMessage(emailSent.msg);
+    }
+
+    if (error?.msg) {
+      setError(error?.msg);
+    }
+  }, [emailSent, loading, error]);
   if (loading) {
     return (
       <Wrapper>
@@ -55,7 +68,7 @@ const ForgotPassword = () => {
               <IoEllipsisHorizontal />
             </div>
             <div className='forgotpassword__content__title'>
-              <h2>Forgot Password</h2>
+              <h2>Reset Password</h2>
             </div>
             <div className='saperator'></div>
 
@@ -67,6 +80,18 @@ const ForgotPassword = () => {
                   password
                 </p>
               </div>
+              {logError && emailSent?.status !== 200 && (
+                <div className='error-log'>
+                  <ErrorMessage message={logError} />
+                </div>
+              )}
+
+              {show && emailSent.status === 200 && (
+                <Message
+                  onClick={() => setShow(false)}
+                  message={message}
+                />
+              )}
               <Input
                 type='email'
                 name='email'

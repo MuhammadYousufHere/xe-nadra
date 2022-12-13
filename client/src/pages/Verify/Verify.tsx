@@ -1,25 +1,23 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { useFormik } from "formik";
-import * as YUP from "yup";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useFormik } from 'formik';
+import * as YUP from 'yup';
+import 'react-toastify/dist/ReactToastify.css';
 
-import { useFormValidation } from "../../hooks";
+import { useFormValidation } from '../../hooks';
 
-import { Wrapper, Button } from "../../components/common";
-import { HiUserPlus } from "react-icons/hi2";
-import { Input } from "../../components/Form";
-import Loader from "../../components/PreLoader/Loader";
-import Alert from "./Alert";
-import Footer from "../Footer";
-import cap from "../../assets/captcha.jpeg";
-import "./VerifyStyle.scss";
-import ScrollToTop from "../../components/ScrollTop";
-import ErrorMessage from "../../components/Form/ErrorMessage";
-import FakeInput from "./FakeInput";
-import { useAppDispatch, useAppSelector } from "../../features/hooks";
-import { getUser, verifyAUser } from "../../features/slices/userSlice";
+import { Wrapper, Button } from '../../components/common';
+import { HiUserPlus } from 'react-icons/hi2';
+import { Input } from '../../components/Form';
+import Loader from '../../components/PreLoader/Loader';
+import Footer from '../Footer';
+import cap from '../../assets/captcha.jpeg';
+import './VerifyStyle.scss';
+import ScrollToTop from '../../components/ScrollTop';
+import ErrorMessage from '../../components/Form/ErrorMessage';
+import FakeInput from './FakeInput';
+import { useAppDispatch, useAppSelector } from '../../features/hooks';
+import { getUser, verifyAUser } from '../../features/slices/userSlice';
 type RegisterErrorResponse = {
   message: string;
   success: boolean;
@@ -29,13 +27,13 @@ const Verify = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
-  const { loading, user } = useAppSelector((state) => state.user);
-  const [error, setError] = useState<RegisterErrorResponse>();
-  const [email, setSelectedEmail] = useState("");
+  const { loading, user, verified } = useAppSelector((state) => state.user);
+  const [error, _setError] = useState<RegisterErrorResponse>();
+  const [email, setSelectedEmail] = useState('');
 
   const initialValues = {
-    code: "",
-    captchacode: "",
+    code: '',
+    captchacode: '',
   };
 
   // form control
@@ -68,9 +66,14 @@ const Verify = () => {
     dispatch(getUser(id!));
   }, [id, dispatch]);
   useEffect(() => {
+    if (verified) {
+      dispatch(getUser(id!));
+    }
+  }, [id, dispatch, verified]);
+  useEffect(() => {
     if (!loading) {
       setSelectedEmail(user?.email);
-      setFieldValue("email", user?.email);
+      setFieldValue('email', user?.email);
     }
   }, [loading, user, setFieldValue]);
   if (loading) {
@@ -80,82 +83,92 @@ const Verify = () => {
       </Wrapper>
     );
   }
+  if (user?.verified) {
+    navigate('/terms&condtion');
+  }
 
   return (
     <>
       <Wrapper>
-        <div className="row bottom-reg">
-          <div className="left">
-            <div className="row top-reg">
-              <div className="left">
+        <div className='row bottom-reg'>
+          <div className='left'>
+            <div className='row top-reg'>
+              <div className='left'>
                 <h1>Step 1</h1>
                 <h3>Personal Information</h3>
               </div>
-              <div className="right">
+              <div className='right'>
                 <h1>Step 2</h1>
                 <h3>Email/Mobile Varification</h3>
               </div>
             </div>
-            <div className="verify">
-              <div className="bar"></div>
-              <div className="verify__content">
-                <div className="icon">
+            <div className='verify'>
+              <div className='bar'></div>
+              <div className='verify__content'>
+                <div className='icon'>
                   <HiUserPlus />
                 </div>
 
-                <div className="saperator"></div>
-                <div className="log-error">
+                <div className='saperator'></div>
+                <div className='log-error'>
                   {error && <ErrorMessage message={error.message} />}
                 </div>
                 <form onSubmit={handleSubmit}>
                   <FakeInput email={email?.toString()} />
 
                   <Input
-                    type="text"
-                    name="code"
-                    id="code"
-                    label="Verification Pin"
+                    type='text'
+                    name='code'
+                    id='code'
+                    label='Verification Pin'
                     value={values.code}
                     onChange={handleChange}
                     error={errors.code}
                   />
-                  <div className="captcha-part">
-                    <div className="captcha">
-                      <img src={cap} alt="cap" />
+                  <div className='captcha-part'>
+                    <div className='captcha'>
+                      <img
+                        src={cap}
+                        alt='cap'
+                      />
                     </div>
                   </div>
                   <Input
-                    type="text"
-                    name="captchacode"
-                    id="captchacode"
+                    type='text'
+                    name='captchacode'
+                    id='captchacode'
                     // label="Code"
                     value={values.captchacode}
                     onChange={handleChange}
                     error={errors.captchacode}
                   />
-                  <div className="saperator"></div>
-                  <div className="submit">
+                  <div className='saperator'></div>
+                  <div className='submit'>
                     <Button
-                      type="button"
-                      title="Resend Code"
-                      variant="secondary"
+                      type='button'
+                      title='Resend Code'
+                      variant='secondary'
                     />
-                    <Button type="submit" title="Verify" variant="secondary" />
+                    <Button
+                      type='submit'
+                      title='Verify'
+                      variant='secondary'
+                    />
                   </div>
                 </form>
               </div>
             </div>
           </div>
-          <div className="right ">
-            <div className="row top-reg hidden">
-              <div className="left">
+          <div className='right '>
+            <div className='row top-reg hidden'>
+              <div className='left'>
                 <h1>Step 1</h1>
                 <h3>Personal ddddasdsdsdad dda wqwe</h3>
               </div>
             </div>
-            <main className="bottom_right">
-              <div className="bar"></div>
-              <div className="bottom_right__content">
+            <main className='bottom_right'>
+              <div className='bar'></div>
+              <div className='bottom_right__content'>
                 <h3>Verification Pin</h3>
 
                 <p>
@@ -167,10 +180,9 @@ const Verify = () => {
             </main>
           </div>
         </div>
-        <ToastContainer />
         <ScrollToTop smooth />
       </Wrapper>
-      <div className="hidden-first">
+      <div className='hidden-first'>
         <Footer />
       </div>
     </>

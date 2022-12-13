@@ -2,7 +2,11 @@
   display: flex;
   justify-content: space-between;
 }
-
+@mixin flexSpaceBetween {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 @mixin flexCenter {
   display: flex;
   justify-content: center;

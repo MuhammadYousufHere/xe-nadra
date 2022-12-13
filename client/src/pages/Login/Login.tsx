@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { IoMdLogIn } from 'react-icons/io';
 import { ImEyeBlocked, ImEye } from 'react-icons/im';
 
@@ -13,10 +13,17 @@ import './LoginStyle.scss';
 import { useFormik } from 'formik';
 import useFormValidation from '../../hooks/useFormValidation';
 import Footer from '../Footer/Footer';
+import { useAppDispatch, useAppSelector } from '../../features/hooks';
+import { loginUser } from '../../features/slices/authSlice';
+import ErrorMessage from '../../components/Form/ErrorMessage';
 
 const Login = () => {
   const validate = useFormValidation();
-  const [loading, setLoading] = useState(true);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const { error, loading, user } = useAppSelector((state) => state.auth);
+
+  const [logError, setLogError] = useState<string | undefined>('');
   const [show, setShow] = useState(false);
   const initialValues = {
     email: '',
@@ -26,8 +33,8 @@ const Login = () => {
   const { resetForm, errors, values, handleChange, handleSubmit } = useFormik({
     initialValues,
     onSubmit: (values) => {
-      console.log(values);
-      alert(JSON.stringify(values, null, 2));
+      dispatch(loginUser({ email: values.email, password: values.password }));
+
       resetForm();
     },
     validationSchema: YUP.object().shape({
@@ -40,16 +47,19 @@ const Login = () => {
   });
 
   useEffect(() => {
-    setInterval(() => {
-      setLoading(false);
-    }, 1000);
-  }, []);
+    if (error?.msg) {
+      setLogError(error?.msg);
+    }
+  }, [loading, error]);
   if (loading) {
     return (
       <Wrapper>
         <Loader />
       </Wrapper>
     );
+  }
+  if (user) {
+    navigate('/dashboard', { state: { user } });
   }
   return (
     <>
@@ -66,6 +76,9 @@ const Login = () => {
             <div className='saperator'></div>
 
             <form onSubmit={handleSubmit}>
+              <div className='log-error'>
+                {logError && <ErrorMessage message={logError} />}
+              </div>
               <Input
                 type='email'
                 name='email'

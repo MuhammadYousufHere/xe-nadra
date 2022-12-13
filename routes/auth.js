@@ -1,10 +1,10 @@
-const express = require("express");
-const jsonwebtoken = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
-const auth = require("../middleware/auth");
-const User = require("../model/User");
-const config = require("config");
-const { check, validationResult } = require("express-validator");
+const express = require('express');
+const jsonwebtoken = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+const auth = require('../middleware/auth');
+const User = require('../model/User');
+const config = require('config');
+const { check, validationResult } = require('express-validator');
 // using express routes
 const router = express.Router();
 
@@ -12,13 +12,13 @@ const router = express.Router();
 // @desc   Test route
 // @access Public
 
-router.get("/", auth, async (req, res) => {
+router.get('/', auth, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select("-password");
+    const user = await User.findById(req.user.id).select('-password');
     res.json(user);
   } catch (error) {
     console.log(error.message);
-    res.status(500).send("Server Error :(");
+    res.status(500).send('Server Error :(');
   }
 });
 
@@ -29,10 +29,10 @@ router.get("/", auth, async (req, res) => {
 // @access Public
 
 router.post(
-  "/",
+  '/',
   [
-    check("email", "Please enter your valid email").isEmail(),
-    check("password", "Password is required").exists(),
+    check('email', 'Please enter your valid email').isEmail(),
+    check('password', 'Password is required').exists(),
   ],
 
   async (req, res) => {
@@ -51,16 +51,21 @@ router.post(
       let user = await User.findOne({ email });
       if (!user) {
         return res.status(400).json({
-          msg: "Invalid Credentials",
+          msg: 'Invalid Credentials',
         });
       }
-
+      //CHECK IF varified
+      if (!user.verified) {
+        return res.status(400).json({
+          msg: 'Please verify your email address',
+        });
+      }
       //check if match
 
       const isMatch = bcrypt.compareSync(password, user.password);
       if (!isMatch) {
         return res.status(400).json({
-          msg: "Invalid Credentials",
+          msg: 'Invalid Credentials',
         });
       }
 
@@ -73,24 +78,24 @@ router.post(
       };
       jsonwebtoken.sign(
         payload,
-        config.get("jwtSecret"),
+        config.get('jwtSecret'),
         // optional but recommended
-        { expiresIn: 36000 },
+        { expiresIn: '30d' },
         (error, token) => {
           if (error) throw error;
           // can also send somerhing else like user id
           res.json({
             token,
-            foreName: user.name,
+            foreName: user.foreName,
             surname: user.surname,
             email: user.email,
+            isAuthenticated: user.verified,
           });
         }
       );
-      // res.send('User Registered!');
     } catch (error) {
       console.error(error.message);
-      res.status(500).send("Server Error");
+      res.status(500).send('Server Error');
     }
   }
 );
