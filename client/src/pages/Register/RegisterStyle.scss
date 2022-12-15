@@ -1,4 +1,4 @@
-@use '../../styles/colors' as *;
+@use "../../styles/colors" as *;
 .top-reg {
   margin-top: 4rem;
   display: flex;
@@ -55,7 +55,7 @@
     background-color: $bg-gray;
     height: max-content;
     .bar {
-      content: '';
+      content: "";
       position: absolute;
       width: 64px;
       height: 5px;
@@ -92,7 +92,7 @@
     box-shadow: 0 0 15px #ddd;
   }
   .bar {
-    content: '';
+    content: "";
     position: absolute;
     width: 64px;
     height: 5px;
@@ -121,13 +121,13 @@
       // visibility: hidden;
       font-size: clamp(1rem, 2vw + 0.44rem, 1.3rem);
       font-weight: 500;
-      font-family: 'Poppins', sans-serif;
+      font-family: "Poppins", sans-serif;
       color: $text-lightest;
     }
     .phonenum,
     .operator-code {
       display: flex;
-      align-items: center;
+      align-items: baseline;
       justify-content: center;
     }
     .phonenum {
@@ -136,7 +136,7 @@
         align-items: center;
         justify-content: center;
         font-size: 1rem;
-        padding: 0.67rem 1rem;
+        padding: 0.66rem 1rem 0.84rem 1rem;
         font-weight: 400;
         color: #555;
         text-align: center;
@@ -155,7 +155,7 @@
         font-size: 19px;
         line-height: 1;
         font-weight: 300;
-        font-family: 'Poppins', 'Roboto', sans-serif;
+        font-family: "Poppins", "Roboto", sans-serif;
       }
       a {
         color: $text-tertiary;
