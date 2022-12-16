@@ -1,13 +1,13 @@
-const express = require('express');
-const bcrypt = require('bcryptjs');
-const jsonwebtoken = require('jsonwebtoken');
-const config = require('config');
+const express = require("express");
+const bcrypt = require("bcryptjs");
+const jsonwebtoken = require("jsonwebtoken");
+const config = require("config");
 
-const { setEmail } = require('./email');
-const { sendSms } = require('./sms');
-require('dotenv').config();
-const { check, validationResult } = require('express-validator');
-const User = require('../model/User');
+const { setEmail } = require("./email");
+const { sendSms } = require("./sms");
+require("dotenv").config();
+const { check, validationResult } = require("express-validator");
+const User = require("../model/User");
 //
 
 // using express routes
@@ -18,17 +18,17 @@ const router = express.Router();
 // @access Public
 
 router.post(
-  '/',
+  "/",
   [
-    check('foreName', 'foreName is required').not().isEmpty(),
-    check('surname', 'surname is required').not().isEmpty(),
-    check('country', 'country is required').not().isEmpty(),
-    check('mobileNum', 'mobile number is required').not().isEmpty(),
-    check('mobileOperater', 'mobile operator is required').not().isEmpty(),
-    check('email', 'Please enter your valid email').isEmail(),
+    check("foreName", "foreName is required").not().isEmpty(),
+    check("surname", "surname is required").not().isEmpty(),
+    check("country", "country is required").not().isEmpty(),
+    check("mobileNum", "mobile number is required").not().isEmpty(),
+    check("mobileOperater", "mobile operator is required").not().isEmpty(),
+    check("email", "Please enter your valid email").isEmail(),
     check(
-      'password',
-      'Password is not correct, it should be 6 or more characters long'
+      "password",
+      "Password is not correct, it should be 6 or more characters long"
     ).isLength({ min: 6, max: 20 }),
   ],
   async (req, res) => {
@@ -55,7 +55,7 @@ router.post(
       let user = await User.findOne({ email });
       if (user) {
         return res.status(400).json({
-          msg: 'User already exists, Please try again with another email.',
+          msg: "User already exists, Please try again with another email.",
         });
       }
       const CODE = Math.floor(100000 + Math.random() * 900000);
@@ -100,13 +100,13 @@ router.post(
     PAK Identity Team,
     NADRA
   `;
-      const title = 'Verification Code';
+      const title = "Verification Code";
       sendSms(mobileNum, Message);
       setEmail(email, Message, title);
 
       jsonwebtoken.sign(
         payload,
-        config.get('jwtSecret') || process.env.JWT_SECRET,
+        process.env.JWT_SECRET,
         // optional but recommended, set it to 1hr in production build
         { expiresIn: 36000 },
         (error, token) => {
@@ -117,14 +117,14 @@ router.post(
             foreName: user.foreName,
             surname: user.surname,
             email: user.email,
-            msg: 'User successfully created',
+            msg: "User successfully created",
             status: 201,
           });
         }
       );
     } catch (error) {
       console.error(error.message);
-      res.status(500).send('Server Error');
+      res.status(500).send("Server Error");
     }
   }
 );
