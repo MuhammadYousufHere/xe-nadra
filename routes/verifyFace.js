@@ -54,15 +54,24 @@ async function getDescriptorsFromDB(image) {
 }
 router.post("/", async (req, res) => {
   if (!req.files || Object.keys(req.files).length === 0) {
-    return res.status(400).send("No files were uploaded.");
+    return res.status(400).json({ message: "No files were uploaded." });
   }
 
-  const File = req.files.image.tempFilePath;
-  let result = await getDescriptorsFromDB(File);
-  if (result) {
-    res.json({ message: result });
-  } else {
-    res.json({ message: "Something went wrong, please try again." });
+  try {
+    const File = req.files.image.tempFilePath;
+    let result = await getDescriptorsFromDB(File);
+    console.log(result);
+    if (Object.keys(result).length > 0) {
+      res.json({ message: result[0] });
+    }
+    res.json({
+      message: {
+        _label: "No Match Found or Face not detected",
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Server Error" });
   }
 });
 
