@@ -1,0 +1,32 @@
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  .pagination-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .pagination-item {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 15px;
+      height: 15px;
+      border-radius: 100%;
+      opacity: 0.5;
+      margin: 0 5px;
+      cursor: pointer;
+
+      background-color: #bbbbbb;
+
+      &.active {
+        background-color: #bbbbbb;
+        opacity: 1;
+      }
+      &.finish {
+        background-color: #28a745;
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+@keyframes blinker {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+.blink {
+  width: 10px;
+  height: 10px;
+  border-radius: 10px;
+  animation: blinker 2s linear infinite;
+  background-color: #de1876;
+  margin-right: 5px;
+  display: inline-block;
+}

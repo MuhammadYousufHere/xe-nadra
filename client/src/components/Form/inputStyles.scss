@@ -1,0 +1,78 @@
+@use '../../styles/colors' as *;
+
+.ui-input-container,
+.input-group {
+  width: 100%;
+}
+.input-group {
+  margin: 0.6rem 0;
+  padding: 0.3rem 0;
+  min-width: 400px;
+  border-radius: 4px;
+  label {
+    // visibility: hidden;
+    font-size: clamp(1rem, 2vw + 0.44rem, 1.3rem);
+    font-weight: 500;
+    font-family: 'Poppins', sans-serif;
+    color: $text-lightest;
+  }
+  .input-box {
+    display: flex;
+    align-items: center;
+    background-color: $bg-light;
+    margin-top: 5px;
+    width: 100%;
+    border: 1px solid $light-gray;
+    border-radius: 4px;
+
+    .input-icon {
+      border-left: 1px solid $light-gray;
+      position: relative;
+      padding: 0.7rem 6px 0.7rem 12px;
+      height: 100%;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      svg {
+        font-size: 1.4rem;
+      }
+    }
+    svg {
+      margin-right: 0.5rem;
+    }
+    input {
+      padding: 0.85rem 1rem;
+      border-radius: 4px;
+
+      color: $text-primary;
+      outline: none;
+      border: none;
+      background-color: $bg-light;
+      width: 100%;
+      margin: 0;
+      text-transform: none;
+      &:focus-within {
+        outline: 1px solid $bg-secondary;
+      }
+    }
+  }
+}
+
+@media (max-width: 28em) {
+  .input-group {
+    margin: 0;
+    min-width: 100%;
+
+    input {
+      font-size: 0.8rem !important;
+    }
+  }
+}
+@media (max-width: 480px) {
+  .input-group {
+    margin: 0.3rem 0;
+    padding: 0.2rem 0;
+    border-radius: 4px;
+  }
+}

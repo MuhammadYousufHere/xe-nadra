@@ -1,0 +1,25 @@
+@use '../../styles/colors' as *;
+@use '../../styles/mixins' as *;
+.fake-input {
+  margin: 0.6rem 0;
+  padding: 0.3rem 0;
+  border-radius: 4px;
+
+  label {
+    // visibility: hidden;
+    font-size: clamp(1rem, 2vw + 0.44rem, 1.3rem);
+    font-weight: 500;
+    font-family: 'Poppins', sans-serif;
+    color: $text-lightest;
+  }
+  &__body {
+    background-color: #eee;
+    padding: 0.5rem;
+    border-radius: 4px;
+    margin: 0.6rem 0;
+    border: 1px solid #a8a8a8;
+    @include fontStack;
+    font-size: 1.2rem;
+    color: $text-lightest;
+  }
+}

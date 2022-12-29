@@ -1,0 +1,15 @@
+.action-btn {
+  display: flex;
+  justify-content: flex-end;
+  margin: 1rem 0;
+  button {
+    border-radius: 5px;
+  }
+}
+.form-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}

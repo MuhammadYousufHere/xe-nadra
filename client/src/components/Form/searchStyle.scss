@@ -1,0 +1,34 @@
+@use "../../styles/colors" as *;
+
+.search-field {
+  width: 100%;
+  height: 100%;
+  padding: 5px;
+  background-color: $bg-light;
+  input {
+    outline: none;
+    border: none;
+    border-radius: 0;
+    width: 100%;
+    padding: 0.9rem 16px;
+  }
+  .search-input {
+    display: flex;
+    width: 100%;
+    border: 1px solid #116cab;
+
+    box-shadow: 0 0 5px #85b2cb, inset 0 2px 2px #8f8f8f;
+  }
+  .search-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $bg-light;
+
+    padding: 1rem;
+    svg {
+      transform: rotate(90deg);
+      font-size: 12px;
+    }
+  }
+}

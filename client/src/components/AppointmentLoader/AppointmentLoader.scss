@@ -1,0 +1,10 @@
+.appointment-loader {
+  background: url("../../assets/loader.gif") no-repeat center center;
+  &::after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+    // overlay background color
+    background: rgba(255, 255, 255, 0.5);
+  }
+}

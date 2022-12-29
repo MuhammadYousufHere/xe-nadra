@@ -1,0 +1,24 @@
+.branch_container {
+  width: 100%;
+  max-width: 800px;
+  padding: 0 10px;
+  margin: 0 auto;
+  background-color: #f8f9fa;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.55rem;
+  .branch_body {
+    margin: 2rem 0;
+    .dropdown .dropdown-body .item-container {
+      overflow: auto;
+      max-height: 165px;
+    }
+  }
+  .branch_body_header {
+    text-align: center;
+    margin-bottom: 1.3rem;
+    .title {
+      font-size: 26px;
+      margin-bottom: 5px;
+    }
+  }
+}

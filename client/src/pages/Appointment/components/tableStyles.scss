@@ -1,0 +1,96 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap");
+
+.container {
+  width: 100%;
+  max-width: 800px;
+  padding: 0 10px;
+  margin: 0 auto;
+  background-color: #f8f9fa;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+  &__headings {
+    margin-bottom: 1.3rem;
+    .title,
+    .subtitle {
+      text-align: center;
+    }
+    .title {
+      font-size: 26px;
+      margin-bottom: 5px;
+    }
+    .subtitle {
+      font-size: 18px;
+      color: #999;
+    }
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  tr th {
+    font-size: 18px;
+    padding: 12px;
+    border: 1px solid #eeeeee;
+    border-left: none;
+    border-right: none;
+    text-align: left;
+  }
+
+  tr td {
+    text-align: left;
+    padding: 1rem 1rem;
+    border-top: 1px solid #dee2e6;
+    &:first-of-type {
+      display: flex;
+      cursor: pointer;
+    }
+  }
+  .select {
+    padding: 0.8rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    &:hover {
+      border: 1px solid #999;
+      opacity: 0.8;
+    }
+    &:active {
+      border: 1px solid #9299;
+    }
+    svg {
+      font-size: 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #15a717;
+      &:active {
+        color: #8c12d4;
+      }
+    }
+  }
+  .active {
+    @extend .select;
+    border-color: #8c12d4 !important;
+    svg {
+      color: #8c12d4;
+    }
+  }
+
+  input {
+    font-size: 16px;
+    background-color: transparent;
+    border: none;
+    width: 91%;
+    padding: 12px 12px;
+    font-family: "Poppins", sans-serif;
+  }
+
+  input:hover {
+  }
+
+  input:focus {
+    outline: 1px solid #ccc;
+    border: 1px solid #ccc;
+  }
+}
