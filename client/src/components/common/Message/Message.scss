@@ -1,0 +1,20 @@
+@use '../../../styles/colors' as *;
+@use '../../../styles/mixins' as *;
+.message-container {
+  width: 100%;
+  color: #3a87ad;
+  background-color: #d9edf7;
+  border: 1px solid #bce8f1;
+  padding: 0.6rem 1rem;
+  margin: 0.7rem 0;
+  .message-body {
+    @include flexSpaceBetween;
+    font-size: 1rem;
+    @include fontStack;
+    .right {
+      svg {
+        font-size: 10px;
+      }
+    }
+  }
+}

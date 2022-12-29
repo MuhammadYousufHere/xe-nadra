@@ -1,0 +1,26 @@
+.header-container {
+  background-color: #ffffff;
+  overflow: hidden;
+  margin: 0 16px 30px;
+  border-radius: 15px;
+  border: none;
+  padding: 2rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  margin: 0 auto;
+  margin: 1rem;
+  margin-top: 0;
+  .header-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #0062cc;
+
+    .logo {
+      color: #0062cc;
+      img {
+        background-color: #0062cc;
+        border-radius: 10px;
+      }
+    }
+  }
+}
