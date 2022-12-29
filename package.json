@@ -4,7 +4,8 @@
   "main": "server.js",
   "license": "MIT",
   "engines": {
-    "node": "16.17.0"
+    "node": "16.17.0",
+    "npm": "8.19.3"
   },
   "scripts": {
     "netserver": "./node_modules/.bin/netlify-lambda serve src",
