@@ -8,12 +8,10 @@
     "npm": "8.19.3"
   },
   "scripts": {
-    "netserver": "./node_modules/.bin/netlify-lambda serve src",
     "start": "node src/server.js",
     "server": "nodemon src/server.js",
     "client": "yarn --cwd client start",
     "dev": "concurrently \"yarn server\" \"yarn client\"",
-    "build": "./node_modules/.bin/netlify-lambda serve src",
     "heroku-postbuild": "cd client/ && yarn --production=false && yarn build"
   },
   "dependencies": {
