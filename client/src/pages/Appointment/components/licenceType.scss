@@ -1,0 +1,45 @@
+.licence-type-container {
+  width: 100%;
+  max-width: 800px;
+  padding: 0 10px;
+  margin: 0 auto;
+  background-color: #f8f9fa;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.55rem;
+  .licence_type_body {
+    margin: 2rem 0;
+  }
+  .licence_type_body_header {
+    text-align: center;
+    margin-bottom: 1.3rem;
+    .title {
+      font-size: 26px;
+      margin-bottom: 5px;
+    }
+  }
+  .licence_type_body_content {
+    background-color: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 1em;
+    text-align: center;
+    overflow: hidden;
+    &_item {
+      padding: 0.8rem;
+      border: 0.1px solid rgba(0, 0, 0, 0.125);
+      border-left: none;
+      border-right: none;
+      cursor: pointer;
+      &:first-of-type {
+        border-top: none;
+      }
+      &:last-of-type {
+        border-bottom: none;
+      }
+    }
+    .selected {
+      color: #fff;
+      background-color: rgba(33, 32, 65, 0.89) !important;
+      border-color: rgba(33, 32, 65, 0.89) !important;
+    }
+  }
+}

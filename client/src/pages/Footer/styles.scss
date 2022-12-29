@@ -1,0 +1,15 @@
+.copyrights-footer {
+  background-color: #3a526a;
+  color: white;
+  padding: 10px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  .content {
+    font-size: clamp(0.8rem, 1vw, 1rem);
+  }
+}

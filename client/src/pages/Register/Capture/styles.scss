@@ -1,0 +1,57 @@
+@use "../../../styles/colors" as *;
+@use "../../../styles/mixins" as *;
+.capture-image {
+  width: 100%;
+  padding: 0 1rem;
+  margin: 1rem auto;
+  background-color: #f8f9fa;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.55rem;
+  &_body {
+    margin: 0.5rem 0;
+    border-radius: 0.25em;
+    &_header {
+      text-align: center;
+      margin-bottom: 1rem;
+      .title {
+        font-size: clamp(1rem, 2vw, 1.3rem);
+        margin-bottom: 5px;
+        color: $text-primary;
+        @include fontStack;
+        font-weight: 500;
+      }
+    }
+    .cam-action {
+      @include flexCenter;
+    }
+    .capture {
+      border: none;
+      outline: none;
+      background-color: $bg-secondary;
+      border-radius: 100%;
+      color: $text-light;
+      width: 50px;
+      height: 50px;
+      padding: 0.7rem;
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+      svg {
+        font-size: 1rem;
+      }
+    }
+    .camera-container {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      width: 100%;
+      margin: 1rem 0;
+      video {
+        border-radius: 0.25em;
+      }
+    }
+  }
+}
+img,
+video {
+  display: block;
+  width: 100%;
+}
