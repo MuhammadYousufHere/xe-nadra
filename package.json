@@ -12,6 +12,7 @@
     "server": "nodemon src/server.js",
     "client": "yarn --cwd client start",
     "dev": "concurrently \"yarn server\" \"yarn client\"",
+    "build": "./node_modules/.bin/netlify-lambda serve src",
     "heroku-postbuild": "cd client/ && yarn --production=false && yarn build"
   },
   "dependencies": {
